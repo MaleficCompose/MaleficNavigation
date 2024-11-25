@@ -1,4 +1,7 @@
+import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
+
 val v = "1.0.0"
+val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
 plugins {
   kotlin("jvm")
@@ -6,9 +9,10 @@ plugins {
   id("org.jetbrains.kotlin.plugin.compose")
   alias(libs.plugins.spotless)
   id("maven-publish")
+  id("cn.lalaki.central") version "1.2.5"
 }
 
-group = "xyz.malefic"
+group = "io.github.omydagreat"
 version = v
 
 repositories {
@@ -32,10 +36,15 @@ spotless {
   }
 }
 
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
 publishing {
   publications {
-    create<MavenPublication>("github") {
-      groupId = "xyz.malefic"
+    create<MavenPublication>("maven") {
+      groupId = "io.github.omydagreat"
       artifactId = "maleficnav"
       version = v
 
@@ -59,15 +68,17 @@ publishing {
         }
       }
     }
-  }
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      url = uri("https://maven.pkg.github.com/OmyDaGreat/MaleficNav")
-      credentials {
-        username = System.getenv("MALEFIC_USER") ?: "OmyDaGreat"
-        password = System.getenv("MALEFIC_PAT_CLASSIC")
+    repositories {
+      maven {
+        url = localMavenRepo
       }
     }
   }
+}
+
+centralPortalPlus {
+  url = localMavenRepo
+  username = "O7bqYLbd"
+  password = "qyiyvXpDmUU0mxjPTuR1kjrQN7QJ7bEtfgRUbd/0ZvVC"
+  publishingType = PublishingType.USER_MANAGED // or PublishingType.AUTOMATIC
 }
