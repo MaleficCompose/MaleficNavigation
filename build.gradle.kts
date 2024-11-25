@@ -48,7 +48,7 @@ publishing {
       url = uri("https://maven.pkg.github.com/OmyDaGreat/MaleficNav")
       credentials {
         username = System.getenv("GITHUB_USERNAME")
-        password = System.getenv("GITHUB_TOKEN")
+        password = System.getenv("MALEFIC_PAT_CLASSIC")
       }
     }
   }

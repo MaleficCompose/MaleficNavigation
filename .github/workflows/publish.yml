@@ -29,4 +29,4 @@ jobs:
         run: ./gradlew publish
         env:
           GITHUB_USERNAME: ${{ secrets.GITHUB_ACTOR }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MALEFIC_PAT_CLASSIC }}
