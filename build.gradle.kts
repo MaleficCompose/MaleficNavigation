@@ -1,12 +1,15 @@
+val v = "1.0.0"
+
 plugins {
   kotlin("jvm")
   id("org.jetbrains.compose")
   id("org.jetbrains.kotlin.plugin.compose")
   alias(libs.plugins.spotless)
+  id("maven-publish")
 }
 
 group = "xyz.malefic"
-version = "1.0.0"
+version = v
 
 repositories {
   mavenCentral()
@@ -26,5 +29,27 @@ dependencies {
 spotless {
   kotlin {
     ktfmt().googleStyle()
+  }
+}
+
+publishing {
+  publications {
+    create<MavenPublication>("github") {
+      groupId = "xyz.malefic"
+      artifactId = "maleficnav"
+      version = v
+
+      from(components["java"])
+    }
+  }
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/OmyDaGreat/MaleficNav")
+      credentials {
+        username = System.getenv("GITHUB_USERNAME")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
   }
 }

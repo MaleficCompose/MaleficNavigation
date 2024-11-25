@@ -31,7 +31,7 @@ import moe.tlaster.precompose.ProvidePreComposeLocals
  */
 @Suppress("kotlin:S107")
 @Composable
-fun MaleficWindow(
+fun NavWindow(
   onCloseRequest: () -> Unit,
   state: WindowState = rememberWindowState(),
   visible: Boolean = true,
