@@ -43,7 +43,7 @@ publishing {
 
       pom {
         name.set("MaleficNav")
-        description.set("A Kotlin Compose Desktop Library")
+        description.set("A Kotlin Compose Desktop Library for navigation meant to be used with PreCompose")
         url.set("https://github.com/OmyDaGreat/MaleficNav")
         developers {
           developer {
