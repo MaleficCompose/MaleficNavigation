@@ -45,7 +45,7 @@ java {
 publishing {
   publications {
     create<MavenPublication>("maven") {
-      groupId = "io.github.omydagreat"
+      groupId = "xyz.malefic"
       artifactId = "maleficnav"
       version = v
 
@@ -57,9 +57,14 @@ publishing {
         url.set("https://github.com/OmyDaGreat/MaleficNav")
         developers {
           developer {
-            id.set("Malefic")
             name.set("Om Gupta")
-            email.set("om@malefic.xyz")
+            email.set("ogupta4242@gmail.com")
+          }
+        }
+        licenses {
+          license {
+            name.set("MIT License")
+            url.set("https://opensource.org/licenses/MIT")
           }
         }
         scm {
@@ -84,7 +89,7 @@ signing {
 
 centralPortalPlus {
   url = localMavenRepo
-  username = "O7bqYLbd"
-  password = "qyiyvXpDmUU0mxjPTuR1kjrQN7QJ7bEtfgRUbd/0ZvVC"
-  publishingType = PublishingType.USER_MANAGED // or PublishingType.AUTOMATIC
+  username = project.findProperty("centralPortalUsername") as String? ?: ""
+  password = project.findProperty("centralPortalPassword") as String? ?: ""
+  publishingType = PublishingType.AUTOMATIC // or PublishingType.USER_MANAGED
 }
