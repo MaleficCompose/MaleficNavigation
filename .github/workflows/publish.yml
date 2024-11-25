@@ -25,13 +25,13 @@ jobs:
       - name: Configure Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Print environment variables
+        run: |
+          echo "GITHUB_USERNAME: ${{ secrets.MALEFIC_USER }}"
+          echo "GITHUB_TOKEN: ${{ secrets.MALEFIC_PAT_CLASSIC }}"
+
       - name: Publish to GitHub Packages
         run: ./gradlew publish
         env:
           GITHUB_USERNAME: ${{ secrets.MALEFIC_USER }}
           GITHUB_TOKEN: ${{ secrets.MALEFIC_PAT_CLASSIC }}
-
-      - name: Print environment variables
-        run: |
-          echo "GITHUB_USERNAME: $GITHUB_USERNAME"
-          echo "GITHUB_TOKEN: $GITHUB_TOKEN"
