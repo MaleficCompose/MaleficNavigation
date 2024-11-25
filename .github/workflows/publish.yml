@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -30,3 +30,8 @@ jobs:
         env:
           GITHUB_USERNAME: ${{ secrets.MALEFIC_USER }}
           GITHUB_TOKEN: ${{ secrets.MALEFIC_PAT_CLASSIC }}
+
+      - name: Print environment variables
+        run: |
+          echo "GITHUB_USERNAME: $GITHUB_USERNAME"
+          echo "GITHUB_TOKEN: $GITHUB_TOKEN"
