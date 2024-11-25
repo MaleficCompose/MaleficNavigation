@@ -3,6 +3,7 @@ precompose = "1.6.2"
 spotless = "7.0.0.BETA4"
 snakeyaml = "2.3"
 kermit = "2.0.4"
+central = "1.2.5"
 
 [libraries]
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
@@ -11,3 +12,4 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+central = { id = "cn.lalaki.central", version.ref = "central"}

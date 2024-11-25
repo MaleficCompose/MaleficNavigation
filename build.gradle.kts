@@ -9,7 +9,8 @@ plugins {
   id("org.jetbrains.kotlin.plugin.compose")
   alias(libs.plugins.spotless)
   id("maven-publish")
-  id("cn.lalaki.central") version "1.2.5"
+  alias(libs.plugins.central)
+  signing
 }
 
 group = "io.github.omydagreat"
@@ -74,6 +75,11 @@ publishing {
       }
     }
   }
+}
+
+signing {
+  useGpgCmd()
+  sign(publishing.publications)
 }
 
 centralPortalPlus {
