@@ -40,6 +40,24 @@ publishing {
       version = v
 
       from(components["java"])
+
+      pom {
+        name.set("MaleficNav")
+        description.set("A Kotlin Compose Desktop Library")
+        url.set("https://github.com/OmyDaGreat/MaleficNav")
+        developers {
+          developer {
+            id.set("Malefic")
+            name.set("Om Gupta")
+            email.set("om@malefic.xyz")
+          }
+        }
+        scm {
+          connection.set("scm:git:git://github.com/OmyDaGreat/MaleficNav.git")
+          developerConnection.set("scm:git:ssh://github.com/OmyDaGreat/MaleficNav.git")
+          url.set("https://github.com/OmyDaGreat/MaleficNav")
+        }
+      }
     }
   }
   repositories {
@@ -47,7 +65,7 @@ publishing {
       name = "GitHubPackages"
       url = uri("https://maven.pkg.github.com/OmyDaGreat/MaleficNav")
       credentials {
-        username = System.getenv("MALEFIC_USER")
+        username = System.getenv("MALEFIC_USER") ?: "OmyDaGreat"
         password = System.getenv("MALEFIC_PAT_CLASSIC")
       }
     }
