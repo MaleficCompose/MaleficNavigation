@@ -153,3 +153,7 @@ Contributions are welcome! Please open an issue or submit a pull request.
 ## Contact
 
 For any questions or feedback, please feel free to contact me.
+
+## License
+
+This project is licensed under the terms of the MIT license.
