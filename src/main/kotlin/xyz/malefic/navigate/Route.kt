@@ -2,13 +2,9 @@ package xyz.malefic.navigate
 
 import androidx.compose.runtime.Composable
 
-/**
- * Interface representing a navigation route.
- */
+/** Interface representing a navigation route. */
 interface Route {
-  /**
-   * The name of the route.
-   */
+  /** The name of the route. */
   val name: String
 
   /**
@@ -18,9 +14,7 @@ interface Route {
    */
   val composable: @Composable (List<String?>) -> Unit
 
-  /**
-   * A boolean indicating if the route is hidden.
-   */
+  /** A boolean indicating if the route is hidden. */
   val hidden: Boolean
 }
 
@@ -38,9 +32,7 @@ data class DynamicRoute(
   override val hidden: Boolean,
   val params: List<String> = emptyList(),
 ) : Route {
-  /**
-   * The full name of the route including parameters.
-   */
+  /** The full name of the route including parameters. */
   val fullName: String
     get() {
       val postfixed = params.map { if (it.endsWith("?")) "${it.dropLast(1)}}?" else "$it}" }

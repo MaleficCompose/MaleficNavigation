@@ -18,45 +18,29 @@ import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.yaml.snakeyaml.Yaml
 
-/**
- * Object responsible for managing navigation routes.
- */
+/** Object responsible for managing navigation routes. */
 @Suppress("MemberVisibilityCanBePrivate")
 object RouteManager {
-  /**
-   * List of dynamic routes that can have parameters.
-   */
+  /** List of dynamic routes that can have parameters. */
   val dynamicRoutes: MutableList<DynamicRoute> = mutableListOf()
 
-  /**
-   * List of static routes that do not have parameters.
-   */
+  /** List of static routes that do not have parameters. */
   val staticRoutes: MutableList<StaticRoute> = mutableListOf()
 
-  /**
-   * Combined list of all routes, both static and dynamic.
-   */
+  /** Combined list of all routes, both static and dynamic. */
   val allRoutes: List<Route>
     get() = staticRoutes + dynamicRoutes
 
-  /**
-   * Flag indicating whether the RouteManager has been initialized.
-   */
+  /** Flag indicating whether the RouteManager has been initialized. */
   private var isInitialized = false
 
-  /**
-   * Navigator instance used for navigation.
-   */
+  /** Navigator instance used for navigation. */
   lateinit var navigator: Navigator
 
-  /**
-   * The startup route to be displayed initially.
-   */
+  /** The startup route to be displayed initially. */
   lateinit var startupRoute: String
 
-  /**
-   * Input stream for reading the YAML configuration.
-   */
+  /** Input stream for reading the YAML configuration. */
   private lateinit var inputYaml: InputStream
 
   /**
@@ -64,7 +48,8 @@ object RouteManager {
    *
    * @param composableMap A map of composable functions keyed by their names.
    * @param inputStream The input stream containing the YAML configuration.
-   * @param navi An optional Navigator instance. If not provided, one will be made and can be accessed via [navigator].
+   * @param navi An optional Navigator instance. If not provided, one will be made and can be
+   *   accessed via [navigator].
    */
   fun initialize(
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
@@ -212,6 +197,8 @@ object RouteManager {
   /**
    * A basic composable function that sets up a navigation host with the initial route.
    *
+   * You might want to make your own instead of relying on this basic setup.
+   *
    * @param initialRoute The initial route to display.
    */
   @Composable
@@ -231,6 +218,8 @@ object RouteManager {
 
   /**
    * A basic composable function that sets up a sidebar with buttons for each non-hidden route.
+   *
+   * You might want to make your own instead of relying on this basic setup.
    */
   @Composable
   fun RoutedSidebar() {

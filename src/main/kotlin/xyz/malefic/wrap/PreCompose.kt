@@ -11,7 +11,8 @@ import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.ProvidePreComposeLocals
 
 /**
- * A composable window with various customizable properties and everything necessary for a basic precompose desktop app.
+ * A composable window with various customizable properties and everything necessary for a basic
+ * precompose desktop app.
  *
  * @param onCloseRequest A lambda function to be called when the window is requested to close.
  * @param state The state of the window, default is a remembered window state.
