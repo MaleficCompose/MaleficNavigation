@@ -12,12 +12,12 @@ MaleficNav is a Kotlin-based navigation library designed for Compose Desktop app
 
 ## Installation
 
-Until this library has been published as a package, you'll need to build this project. Please disregard the below.
 To use MaleficNav in your project, add the following dependencies to your `build.gradle.kts` file:
 
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
+    implementation("xyz.malefic:maleficnav:1.0.0")
 }
 ```
 

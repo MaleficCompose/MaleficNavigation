@@ -93,3 +93,18 @@ centralPortalPlus {
   password = project.findProperty("centralPortalPassword") as String? ?: ""
   publishingType = PublishingType.AUTOMATIC // or PublishingType.USER_MANAGED
 }
+
+tasks.register("updateReadme") {
+  group = "centralportal"
+  description = "Update the README.md file with the current version"
+  doLast {
+    val readmeFile = file("README.md")
+    val content = readmeFile.readText()
+    val updatedContent = content.replace("{maleficnav_version}", v)
+    readmeFile.writeText(updatedContent)
+  }
+}
+
+tasks.named("build") {
+  dependsOn("updateReadme")
+}
