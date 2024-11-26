@@ -66,7 +66,8 @@ fun App2(navi: Navigator) {
 
 ### 2. Define Routes in YAML
 
-Create a `routes.yaml` file to define your routes. For example:
+Create a `routes.yaml` file to define the routes through your application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
+For example:
 
 ```yaml
 routes:
@@ -103,7 +104,7 @@ fun NavigationMenu() {
 
 ### 4. Define Composable Map
 
-Create a map of composable functions that follows whatever you set up:
+Create a map of composable functions that follows whatever you set up. Within the library, there is an extension function of List's get that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
 
 ```kotlin
 val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
@@ -115,7 +116,7 @@ val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
 
 ### 5. Initialize RouteManager
 
-Initialize the `RouteManager` in your `main` function:
+Initialize the `RouteManager` in your `main` function. Make sure to reference the routes.yaml file in one way or another, with below being a beginner's example:
 
 ```kotlin
 fun main() = application {
