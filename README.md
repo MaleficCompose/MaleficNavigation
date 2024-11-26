@@ -146,6 +146,12 @@ src/
 
 If you want to start with a completely set up project, you can find the above example [here](https://github.com/OmyDaGreat/ComposeDesktopTemplate).
 
+## Projects Using This Library
+
+### [baka-notes](https://github.com/OmyDaGreat/baka-notes) - A note-taking app by me, for me
+
+If you want to add your project here, you can submit a pull request or reach out to me.
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.
