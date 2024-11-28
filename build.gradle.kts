@@ -1,6 +1,6 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
-val v = "1.1.0"
+val v = "1.1.1"
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
 plugins {
@@ -13,7 +13,7 @@ plugins {
   signing
 }
 
-group = "io.github.omydagreat"
+group = "xyz.malefic"
 version = v
 
 repositories {
@@ -30,6 +30,7 @@ dependencies {
   implementation(libs.snakeyaml)
   implementation(libs.gson)
   implementation(libs.kermit)
+  implementation(libs.malefic.extensions)
 }
 
 spotless {
@@ -54,7 +55,7 @@ publishing {
 
       pom {
         name.set("MaleficNav")
-        description.set("A Kotlin Compose Desktop Library for navigation meant to be used with PreCompose")
+        description.set("A Compose Desktop library for navigation meant to be used alongside PreCompose")
         url.set("https://github.com/OmyDaGreat/MaleficNav")
         developers {
           developer {
@@ -92,5 +93,5 @@ centralPortalPlus {
   url = localMavenRepo
   username = project.findProperty("centralPortalUsername") as String? ?: ""
   password = project.findProperty("centralPortalPassword") as String? ?: ""
-  publishingType = PublishingType.AUTOMATIC // or PublishingType.USER_MANAGED
+  publishingType = PublishingType.AUTOMATIC
 }

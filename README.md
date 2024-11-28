@@ -5,7 +5,7 @@ MaleficNav is a Kotlin-based navigation library designed for Compose Desktop app
 ## Features
 
 - **Dynamic and Static Routes**: Define routes with or without parameters.
-- **YAML Configuration**: Load routes from a YAML file.
+- **Multi-file Configuration**: Load routes from a YAML, XML, JSON or custom config file.
 - **Composable Navigation**: Use composable functions for route content.
 - **Navigator Integration**: Seamless integration with PreCompose navigation.
 - **Basic Setup**: Comes with a basic implementation that's akin to plug and play.
@@ -17,7 +17,7 @@ To use MaleficNav in your project, add the following dependencies to your `build
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
-    implementation("xyz.malefic:maleficnav:1.1.0")
+    implementation("xyz.malefic:maleficnav:1.1.1")
 }
 ```
 
@@ -56,7 +56,7 @@ fun App2(navi: Navigator) {
     ) {
       Button(onClick = { text = "Hello, Desktop 2!" }) { Text(text) }
       Spacer(modifier = Modifier.height(16.dp))
-      Button(onClick = { navi.navigate("home/1061844") }) { Text("Go to App1") }
+      Button(onClick = { navi.navigate("home/123456") }) { Text("Go to App1") }
       Spacer(modifier = Modifier.height(16.dp))
       Button(onClick = { navi.navigate("hidden/boo!") }) { Text("Go to Hidden Page") }
     }
@@ -103,7 +103,7 @@ fun NavigationMenu() {
 
 ### 4. Define Composable Map
 
-Create a map of composable functions that follows whatever you set up. Within the library, there is an extension function of List that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
+Create a map of composable functions that follows whatever you set up. Within the [MaleficExtensions](https://github.com/MaleficCompose/MaleficExtensions) library, there is an extension function of List that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
 
 ```kotlin
 val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(

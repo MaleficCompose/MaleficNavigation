@@ -17,10 +17,9 @@ import java.io.InputStream
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
-import xyz.malefic.extensions.gate
+import xyz.malefic.extensions.precompose.gate
 
 /** Manages the routes for the application. */
-@Suppress("MemberVisibilityCanBePrivate", "unused")
 object RouteManager {
   private var isInitialized = false
   val dynamicRoutes: MutableList<DynamicRoute> = mutableListOf()
