@@ -35,7 +35,8 @@ data class DynamicRoute(
   /** The full name of the route including parameters. */
   val fullName: String
     get() {
-      val postfixed = params.map { if (it.endsWith("?")) "${it.dropLast(1)}}?" else "$it}" }
+      val postfixed =
+        params.map { param -> if (param.endsWith("?")) "${param.dropLast(1)}}?" else "$param}" }
       return "$name/${postfixed.joinToString("/{", prefix = "{")}"
     }
 }

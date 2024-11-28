@@ -1,14 +1,14 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
-val v = "1.0.0"
+val v = "1.1.0"
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
 plugins {
   kotlin("jvm")
   id("org.jetbrains.compose")
   id("org.jetbrains.kotlin.plugin.compose")
-  alias(libs.plugins.spotless)
   id("maven-publish")
+  alias(libs.plugins.spotless)
   alias(libs.plugins.central)
   signing
 }
@@ -28,6 +28,7 @@ dependencies {
   implementation(compose.foundation)
   implementation(libs.precompose)
   implementation(libs.snakeyaml)
+  implementation(libs.gson)
   implementation(libs.kermit)
 }
 
@@ -92,19 +93,4 @@ centralPortalPlus {
   username = project.findProperty("centralPortalUsername") as String? ?: ""
   password = project.findProperty("centralPortalPassword") as String? ?: ""
   publishingType = PublishingType.AUTOMATIC // or PublishingType.USER_MANAGED
-}
-
-tasks.register("updateReadme") {
-  group = "centralportal"
-  description = "Update the README.md file with the current version"
-  doLast {
-    val readmeFile = file("README.md")
-    val content = readmeFile.readText()
-    val updatedContent = content.replace("{maleficnav_version}", v)
-    readmeFile.writeText(updatedContent)
-  }
-}
-
-tasks.named("build") {
-  dependsOn("updateReadme")
 }

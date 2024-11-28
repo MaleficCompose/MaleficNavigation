@@ -12,56 +12,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import java.io.InputStream
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
-import org.yaml.snakeyaml.Yaml
+import xyz.malefic.extensions.gate
 
-/** Object responsible for managing navigation routes. */
-@Suppress("MemberVisibilityCanBePrivate")
+/** Manages the routes for the application. */
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 object RouteManager {
-  /** List of dynamic routes that can have parameters. */
+  private var isInitialized = false
   val dynamicRoutes: MutableList<DynamicRoute> = mutableListOf()
-
-  /** List of static routes that do not have parameters. */
   val staticRoutes: MutableList<StaticRoute> = mutableListOf()
-
-  /** Combined list of all routes, both static and dynamic. */
   val allRoutes: List<Route>
     get() = staticRoutes + dynamicRoutes
 
-  /** Flag indicating whether the RouteManager has been initialized. */
-  private var isInitialized = false
-
-  /** Navigator instance used for navigation. */
-  lateinit var navigator: Navigator
-
-  /** The startup route to be displayed initially. */
+  lateinit var navi: Navigator
   lateinit var startupRoute: String
 
-  /** Input stream for reading the YAML configuration. */
-  private lateinit var inputYaml: InputStream
-
   /**
-   * Initializes the RouteManager with the provided composable map and input stream.
+   * Initializes the RouteManager with the provided routes and navigator.
    *
-   * @param composableMap A map of composable functions keyed by their names.
-   * @param inputStream The input stream containing the YAML configuration.
-   * @param navi An optional Navigator instance. If not provided, one will be made and can be
-   *   accessed via [navigator].
+   * @param composableMap A map of composable functions.
+   * @param inputStream The input stream to load routes from.
+   * @param configLoader The configuration loader to use.
+   * @param navi An optional navigator to use.
    */
   fun initialize(
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
     inputStream: InputStream,
+    configLoader: ConfigLoader,
     navi: Navigator? = null,
   ) {
     if (!isInitialized) {
-      inputYaml = inputStream
-      loadRoutesFromYaml(composableMap)
+      val routes = configLoader.loadRoutes(composableMap, inputStream)
+      routes.forEach { route ->
+        when (route) {
+          is DynamicRoute -> dynamicRoutes.add(route)
+          is StaticRoute -> staticRoutes.add(route)
+        }
+      }
+      startupRoute = routes.firstOrNull { !it.hidden }?.name ?: "default"
       isInitialized = true
     }
-    navi?.let { navigator = navi }
+    navi?.let { this.navi = it }
   }
 
   /**
@@ -71,7 +66,9 @@ object RouteManager {
    */
   private fun ensureInitialized() {
     check(isInitialized) {
-      throw IllegalStateException("RouteManager is not initialized. Call initialize() first.")
+      throw IllegalStateException(
+        "RouteManager is not initialized. Call RouteManager.initialize() first."
+      )
     }
   }
 
@@ -83,144 +80,36 @@ object RouteManager {
   @Composable
   private fun composableEnsureInitialized() {
     check(isInitialized) {
-      throw IllegalStateException("RouteManager is not initialized. Call initialize() first.")
+      throw IllegalStateException(
+        "RouteManager is not initialized. Call RouteManager.initialize() first."
+      )
     }
-    if (!::navigator.isInitialized) {
-      navigator = rememberNavigator()
-    }
-  }
-
-  /**
-   * Retrieves a composable function by its name from the provided composable map.
-   *
-   * @param composableName The name of the composable function.
-   * @param composableMap The map of composable functions.
-   * @return The composable function, or a default function displaying "Unknown route".
-   */
-  private fun getComposableByName(
-    composableName: String,
-    composableMap: Map<String, @Composable (List<String?>) -> Unit>,
-  ): @Composable (List<String?>) -> Unit =
-    composableMap[composableName] ?: { _ -> Text("Unknown route") }
-
-  /**
-   * Loads routes from the provided YAML input stream.
-   *
-   * @param composableMap The map of composable functions.
-   */
-  private fun loadRoutesFromYaml(composableMap: Map<String, @Composable (List<String?>) -> Unit>) {
-    val yaml = Yaml()
-    val inputStream: InputStream = inputYaml
-    val data: Map<String, Any> = yaml.load(inputStream)
-
-    loadData(data, composableMap)
-
-    startupRoute = data["startup"] as? String ?: getNonHiddenRoutes().first().name
-    println("Startup Route: $startupRoute")
-  }
-
-  /**
-   * Loads route data from the provided map.
-   *
-   * @param data The map containing route data.
-   * @param composableMap The map of composable functions.
-   */
-  private fun loadData(
-    data: Map<String, Any>,
-    composableMap: Map<String, @Composable (List<String?>) -> Unit>,
-  ) {
-    val routes = data["routes"]
-    if (routes is List<*>) {
-      routes.forEach { route ->
-        if (route is Map<*, *>) {
-          processRoute(route, composableMap)
-        }
-      }
+    if (!::navi.isInitialized) {
+      navi = rememberNavigator()
     }
   }
 
   /**
-   * Processes a single route from the provided map.
+   * Displays the navigation host with the provided startup route.
    *
-   * @param route The map containing route data.
-   * @param composableMap The map of composable functions.
-   */
-  private fun processRoute(
-    route: Map<*, *>,
-    composableMap: Map<String, @Composable (List<String?>) -> Unit>,
-  ) {
-    val name = route["name"] as? String ?: return
-    val composableName = route["composable"] as? String ?: return
-    val composable = getComposableByName(composableName, composableMap)
-    val hidden = route["hidden"] == true
-    val params = route["params"]
-    if (params is List<*>) {
-      processParams(name, composable, hidden, params)
-    } else {
-      staticRoutes.add(StaticRoute(name, composable, hidden))
-    }
-    println("Loaded route: $name with params: $params")
-  }
-
-  /**
-   * Processes route parameters and adds the route to the appropriate list.
-   *
-   * @param name The name of the route.
-   * @param composable The composable function for the route.
-   * @param hidden A boolean indicating if the route is hidden.
-   * @param params The list of parameters for the route.
-   */
-  private fun processParams(
-    name: String,
-    composable: @Composable (List<String?>) -> Unit,
-    hidden: Boolean,
-    params: List<*>,
-  ) {
-    val stringParams = params.filterIsInstance<String>()
-    if (stringParams.size == params.size) {
-      dynamicRoutes.add(DynamicRoute(name, composable, hidden, stringParams))
-    } else {
-      staticRoutes.add(StaticRoute(name, composable, hidden))
-    }
-  }
-
-  /**
-   * Retrieves a list of non-hidden routes.
-   *
-   * @return A list of non-hidden routes.
-   */
-  fun getNonHiddenRoutes(): List<Route> {
-    ensureInitialized()
-    return allRoutes.filter { !it.hidden }
-  }
-
-  /**
-   * A basic composable function that sets up a navigation host with the initial route.
-   *
-   * You might want to make your own instead of relying on this basic setup.
-   *
-   * @param initialRoute The initial route to display.
+   * @param startupRoute The initial route to display.
    */
   @Composable
-  fun RoutedNavHost(initialRoute: String = startupRoute) {
+  fun RoutedNavHost(startupRoute: String = this.startupRoute) {
     composableEnsureInitialized()
-    NavHost(navigator, initialRoute = initialRoute) {
+    NavHost(navi, initialRoute = startupRoute) {
       dynamicRoutes.forEach { route ->
-        println("Adding dynamic route ${route.name}")
+        Logger.d("Adding dynamic route ${route.name}")
         scene(route.fullName) { params -> route.composable(params.pathMap.values.toList()) }
       }
       staticRoutes.forEach { route ->
-        println("Adding static route ${route.name}")
+        Logger.d("Adding static route ${route.name}")
         scene(route.name) { route.composable(emptyList()) }
       }
     }
   }
 
-  /**
-   * A basic composable function that sets up a sidebar with buttons for each non-hidden route.
-   *
-   * You might want to make your own instead of relying on this basic setup.
-   */
+  /** Displays the sidebar with buttons for each non-hidden route. */
   @Composable
   fun RoutedSidebar() {
     composableEnsureInitialized()
@@ -230,10 +119,18 @@ object RouteManager {
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       getNonHiddenRoutes().forEach { route ->
-        Button(onClick = { navigator.navigate(route.name) }) {
-          Text(route.name.capitalize(Locale.current))
-        }
+        Button(onClick = { navi gate route.name }) { Text(route.name.capitalize(Locale.current)) }
       }
     }
+  }
+
+  /**
+   * Returns a list of all non-hidden routes.
+   *
+   * @return A list of non-hidden routes.
+   */
+  fun getNonHiddenRoutes(): List<Route> {
+    ensureInitialized()
+    return allRoutes.filter { !it.hidden }
   }
 }

@@ -17,7 +17,7 @@ To use MaleficNav in your project, add the following dependencies to your `build
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
-    implementation("xyz.malefic:maleficnav:1.0.0")
+    implementation("xyz.malefic:maleficnav:1.1.0")
 }
 ```
 
@@ -64,10 +64,9 @@ fun App2(navi: Navigator) {
 }
 ```
 
-### 2. Define Routes in YAML
+### 2. Define Routes in a config format
 
-Create a `routes.yaml` file to define the routes through your application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
-For example:
+Currently, only YAML, JSON, and XML are supported. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
 
 ```yaml
 routes:
@@ -104,28 +103,28 @@ fun NavigationMenu() {
 
 ### 4. Define Composable Map
 
-Create a map of composable functions that follows whatever you set up. Within the library, there is an extension function of List's get that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
+Create a map of composable functions that follows whatever you set up. Within the library, there is an extension function of List that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
 
 ```kotlin
 val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
     "App1" to { params -> App1(id = params[0]!!, name = params[1, null]) },
-    "App2" to { _ -> App2(RouteManager.navigator) },
+    "App2" to { _ -> App2(RouteManager.navi) },
     "Text" to { params -> Text(text = params[0, "Nope."]) }
 )
 ```
 
 ### 5. Initialize RouteManager
 
-Initialize the `RouteManager` in your `main` function. Make sure to reference the routes.yaml file in one way or another, with below being a beginner's example:
+Initialize the `RouteManager` in your `main` function. The `ConfigLoader` should be of the same type as your routes file. You can create your own by implementing the interface. Make sure to reference the `routes.yaml` (or whatever other config format you use) file in one way or another, with this being a beginner's example:
 
 ```kotlin
 fun main() = application {
-    NavWindow(onCloseRequest = ::exitApplication) {
-        MaterialTheme {
-            RouteManager.initialize(composableMap, this::class.java.getResourceAsStream("/routes.yaml")!!)
-            NavigationMenu()
-        }
+  NavWindow(onCloseRequest = ::exitApplication) {
+    MaterialTheme {
+      RouteManager.initialize(composableMap, this::class.java.getResourceAsStream("/routes.yaml")!!, YamlConfigLoader())
+      NavigationMenu()
     }
+  }
 }
 ```
 
