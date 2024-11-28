@@ -5,12 +5,14 @@ snakeyaml = "2.3"
 gson = "2.11.0"
 kermit = "2.0.5"
 central = "1.2.5"
+maleficextensions = "1.0.0"
 
 [libraries]
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+malefic-extensions = { module = "xyz.malefic:maleficextensions", version.ref = "maleficextensions" }
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
