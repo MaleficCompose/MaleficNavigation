@@ -25,6 +25,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Make gradlew Executable
+        run: chmod +x gradlew
+
       - name: Build and Generate Docs
         run: |
           ./gradlew dokkaHtml
