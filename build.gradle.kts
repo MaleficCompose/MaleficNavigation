@@ -92,8 +92,8 @@ signing {
 
 centralPortalPlus {
   url = localMavenRepo
-  username = project.findProperty("centralPortalUsername") as String? ?: ""
-  password = project.findProperty("centralPortalPassword") as String? ?: ""
+  username = System.getenv("centralPortalUsername") ?: ""
+  password = System.getenv("centralPortalPassword") ?: ""
   publishingType = PublishingType.AUTOMATIC
 }
 
