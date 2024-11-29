@@ -1,6 +1,6 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
-val v = "1.1.1"
+val v = "1.1.2"
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
 plugins {
@@ -41,6 +41,8 @@ spotless {
 }
 
 java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
   withJavadocJar()
   withSourcesJar()
 }
