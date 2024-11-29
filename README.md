@@ -17,7 +17,7 @@ To use MaleficNav in your project, add the following dependencies to your `build
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
-    implementation("xyz.malefic:maleficnav:1.1.1")
+    implementation("xyz.malefic:maleficnav:1.1.2")
 }
 ```
 
