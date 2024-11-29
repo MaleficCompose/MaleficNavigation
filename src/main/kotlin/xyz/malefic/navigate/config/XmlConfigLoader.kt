@@ -5,7 +5,6 @@ import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Element
 import org.w3c.dom.Node
-import xyz.malefic.navigate.ConfigLoader
 import xyz.malefic.navigate.DynamicRoute
 import xyz.malefic.navigate.Route
 import xyz.malefic.navigate.StaticRoute

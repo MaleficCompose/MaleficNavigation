@@ -115,7 +115,7 @@ val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
 
 ### 5. Initialize RouteManager
 
-Initialize the `RouteManager` in your `main` function. The `ConfigLoader` should be of the same type as your routes file. You can create your own by implementing the interface. Make sure to reference the `routes.yaml` (or whatever other config format you use) file in one way or another, with this being a beginner's example:
+Initialize the `RouteManager` in your `main` function. The `ConfigLoader` should be of the same type as your routes file. You can create your own by implementing the interface. The `NavWindow` is a completely set up Window for PreCompose on Desktop coming from [MaleficComponents](https://github.com/MaleficCompose/MaleficComponents), but you can use a regular Window or other composable as long as PreCompose is still set up properly. Make sure to reference the `routes.yaml` (or whatever other config format you use) file in one way or another, with this being a beginner's example:
 
 ```kotlin
 fun main() = application {

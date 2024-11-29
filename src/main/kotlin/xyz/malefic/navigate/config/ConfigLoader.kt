@@ -1,7 +1,10 @@
-package xyz.malefic.navigate
+package xyz.malefic.navigate.config
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import xyz.malefic.navigate.DynamicRoute
+import xyz.malefic.navigate.Route
+import xyz.malefic.navigate.StaticRoute
 import java.io.InputStream
 
 /** Interface for loading and processing routes from a configuration. */

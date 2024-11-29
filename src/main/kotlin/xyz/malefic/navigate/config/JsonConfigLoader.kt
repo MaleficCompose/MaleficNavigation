@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStream
-import xyz.malefic.navigate.ConfigLoader
 import xyz.malefic.navigate.Route
 
 /** A loader that reads route configurations from a JSON input stream. */

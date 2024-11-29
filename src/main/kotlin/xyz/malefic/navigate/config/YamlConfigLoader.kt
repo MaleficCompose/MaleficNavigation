@@ -3,7 +3,6 @@ package xyz.malefic.navigate.config
 import androidx.compose.runtime.Composable
 import java.io.InputStream
 import org.yaml.snakeyaml.Yaml
-import xyz.malefic.navigate.ConfigLoader
 import xyz.malefic.navigate.Route
 
 /** A loader that reads route configurations from a YAML file. */

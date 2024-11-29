@@ -18,6 +18,7 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
 import xyz.malefic.extensions.precompose.gate
+import xyz.malefic.navigate.config.ConfigLoader
 
 /** Manages the routes for the application. */
 object RouteManager {
