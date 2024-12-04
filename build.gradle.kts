@@ -1,6 +1,6 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
-val v = "1.1.2"
+val v = "1.1.3"
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
 plugins {
@@ -47,6 +47,12 @@ java {
   withSourcesJar()
 }
 
+kotlin {
+  jvmToolchain {
+    this.languageVersion.set(JavaLanguageVersion.of(17))
+  }
+}
+
 publishing {
   publications {
     create<MavenPublication>("maven") {
@@ -59,7 +65,7 @@ publishing {
       pom {
         name.set("MaleficNav")
         description.set("A Compose Desktop library for navigation meant to be used alongside PreCompose")
-        url.set("https://github.com/OmyDaGreat/MaleficNav")
+        url.set("https://github.com/MaleficCompose/MaleficNav")
         developers {
           developer {
             name.set("Om Gupta")
@@ -73,9 +79,9 @@ publishing {
           }
         }
         scm {
-          connection.set("scm:git:git://github.com/OmyDaGreat/MaleficNav.git")
-          developerConnection.set("scm:git:ssh://github.com/OmyDaGreat/MaleficNav.git")
-          url.set("https://github.com/OmyDaGreat/MaleficNav")
+          connection.set("scm:git:git://github.com/MaleficCompose/MaleficNav.git")
+          developerConnection.set("scm:git:ssh://github.com/MaleficCompose/MaleficNav.git")
+          url.set("https://github.com/MaleficCompose/MaleficNav")
         }
       }
     }
@@ -100,5 +106,5 @@ centralPortalPlus {
 }
 
 tasks.dokkaHtml {
-  outputDirectory.set(layout.buildDirectory.get().asFile.resolve("dokka"))
+  outputDirectory.set(layout.buildDirectory.dir("dokka"))
 }
