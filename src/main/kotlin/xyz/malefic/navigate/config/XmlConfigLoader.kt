@@ -12,16 +12,17 @@ import xyz.malefic.navigate.StaticRoute
 /** A loader that reads route configurations from an XML input stream. */
 class XmlConfigLoader : ConfigLoader {
   /**
-   * Loads routes from an XML input stream and maps them to composable functions.
+   * Loads routes from an XML input stream and maps them to composable functions. Returns a pair
+   * with the startup route as a string and the list of routes.
    *
    * @param composableMap A map of route names to composable functions.
    * @param inputStream The input stream containing the XML configuration.
-   * @return A list of routes.
+   * @return A pair containing the startup route and a list of routes.
    */
   override fun loadRoutes(
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
     inputStream: InputStream,
-  ): List<Route> {
+  ): Pair<String, List<Route>> {
     val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
     val document = documentBuilder.parse(inputStream)
     document.documentElement.normalize()
@@ -51,25 +52,15 @@ class XmlConfigLoader : ConfigLoader {
         }
       }
     }
-    return routes
-  }
-
-  /**
-   * Retrieves the startup route from the given XML input stream.
-   *
-   * @param inputStream The input stream containing the XML configuration.
-   * @return The name of the startup route.
-   */
-  override fun getStartupRoute(inputStream: InputStream): String {
-    val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-    val document = documentBuilder.parse(inputStream)
-    document.documentElement.normalize()
 
     val startupNode = document.getElementsByTagName("startup").item(0)
-    return if (startupNode != null && startupNode.nodeType == Node.ELEMENT_NODE) {
-      (startupNode as Element).textContent
-    } else {
-      "default"
-    }
+    val startupRoute =
+      if (startupNode != null && startupNode.nodeType == Node.ELEMENT_NODE) {
+        (startupNode as Element).textContent
+      } else {
+        "default"
+      }
+
+    return Pair(startupRoute, routes)
   }
 }

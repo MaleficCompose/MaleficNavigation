@@ -8,30 +8,21 @@ import xyz.malefic.navigate.Route
 /** A loader that reads route configurations from a YAML file. */
 class YamlConfigLoader : ConfigLoader {
   /**
-   * Loads routes from the provided YAML input stream.
+   * Loads routes from the provided YAML input stream. Returns a pair with the startup route as a
+   * string and the list of routes.
    *
    * @param composableMap A map of route names to composable functions.
    * @param inputStream The input stream of the YAML file.
-   * @return A list of routes.
+   * @return A pair containing the startup route and a list of routes.
    */
   override fun loadRoutes(
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
     inputStream: InputStream,
-  ): List<Route> {
+  ): Pair<String, List<Route>> {
     val yaml = Yaml()
     val data: Map<String, Any> = yaml.load(inputStream)
-    return processRoutes(data, composableMap)
-  }
-
-  /**
-   * Retrieves the startup route from the given YAML input stream.
-   *
-   * @param inputStream The input stream containing the YAML configuration.
-   * @return The name of the startup route.
-   */
-  override fun getStartupRoute(inputStream: InputStream): String {
-    val yaml = Yaml()
-    val data: Map<String, Any> = yaml.load(inputStream)
-    return data["startup"] as? String ?: "default"
+    val routes = processRoutes(data, composableMap)
+    val startupRoute = data["startup"] as? String ?: "default"
+    return Pair(startupRoute, routes)
   }
 }

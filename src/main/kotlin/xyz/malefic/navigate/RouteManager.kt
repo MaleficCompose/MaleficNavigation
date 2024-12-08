@@ -46,14 +46,15 @@ object RouteManager {
     navi: Navigator? = null,
   ) {
     if (!isInitialized) {
-      val routes = configLoader.loadRoutes(composableMap, inputStream)
+      val config = configLoader.loadRoutes(composableMap, inputStream)
+      val routes = config.second
       routes.forEach { route ->
         when (route) {
           is DynamicRoute -> dynamicRoutes.add(route)
           is StaticRoute -> staticRoutes.add(route)
         }
       }
-      val startupRouteFromConfig = configLoader.getStartupRoute(inputStream)
+      val startupRouteFromConfig = config.first
       startupRoute = routes.firstOrNull { it.name == startupRouteFromConfig }?.name ?: "default"
       isInitialized = true
     }

@@ -10,24 +10,17 @@ import xyz.malefic.navigate.StaticRoute
 /** Interface for loading and processing routes from a configuration. */
 interface ConfigLoader {
   /**
-   * Loads routes from an input stream and maps them to composables.
+   * Loads routes from an input stream and maps them to composable functions. Returns a pair with
+   * the startup route as a string and the list of routes.
    *
    * @param composableMap A map of route names to composable functions.
-   * @param inputStream The input stream containing the route configuration.
-   * @return A list of routes.
+   * @param inputStream The input stream containing the configuration.
+   * @return A pair containing the startup route and a list of routes.
    */
   fun loadRoutes(
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
     inputStream: InputStream,
-  ): List<Route>
-
-  /**
-   * Retrieves the startup route from the given input stream.
-   *
-   * @param inputStream The input stream containing the route configuration.
-   * @return The name of the startup route.
-   */
-  fun getStartupRoute(inputStream: InputStream): String
+  ): Pair<String, List<Route>>
 
   /**
    * Processes route data and maps them to composables.
