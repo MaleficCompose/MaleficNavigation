@@ -25,4 +25,18 @@ class JsonConfigLoader : ConfigLoader {
     val data: Map<String, Any> = gson.fromJson(reader, type)
     return processRoutes(data, composableMap)
   }
+
+  /**
+   * Retrieves the startup route from a JSON input stream.
+   *
+   * @param inputStream The input stream containing the JSON configuration.
+   * @return The startup route as a string, or "default" if not found.
+   */
+  override fun getStartupRoute(inputStream: InputStream): String {
+    val gson = Gson()
+    val reader = inputStream.reader()
+    val type = object : TypeToken<Map<String, Any>>() {}.type
+    val data: Map<String, Any> = gson.fromJson(reader, type)
+    return data["startup"] as? String ?: "default"
+  }
 }

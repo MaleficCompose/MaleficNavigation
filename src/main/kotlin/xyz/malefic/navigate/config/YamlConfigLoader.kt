@@ -22,4 +22,16 @@ class YamlConfigLoader : ConfigLoader {
     val data: Map<String, Any> = yaml.load(inputStream)
     return processRoutes(data, composableMap)
   }
+
+  /**
+   * Retrieves the startup route from the given YAML input stream.
+   *
+   * @param inputStream The input stream containing the YAML configuration.
+   * @return The name of the startup route.
+   */
+  override fun getStartupRoute(inputStream: InputStream): String {
+    val yaml = Yaml()
+    val data: Map<String, Any> = yaml.load(inputStream)
+    return data["startup"] as? String ?: "default"
+  }
 }

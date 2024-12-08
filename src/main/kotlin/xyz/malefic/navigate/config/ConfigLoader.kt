@@ -2,10 +2,10 @@ package xyz.malefic.navigate.config
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import java.io.InputStream
 import xyz.malefic.navigate.DynamicRoute
 import xyz.malefic.navigate.Route
 import xyz.malefic.navigate.StaticRoute
-import java.io.InputStream
 
 /** Interface for loading and processing routes from a configuration. */
 interface ConfigLoader {
@@ -20,6 +20,14 @@ interface ConfigLoader {
     composableMap: Map<String, @Composable (List<String?>) -> Unit>,
     inputStream: InputStream,
   ): List<Route>
+
+  /**
+   * Retrieves the startup route from the given input stream.
+   *
+   * @param inputStream The input stream containing the route configuration.
+   * @return The name of the startup route.
+   */
+  fun getStartupRoute(inputStream: InputStream): String
 
   /**
    * Processes route data and maps them to composables.

@@ -53,7 +53,8 @@ object RouteManager {
           is StaticRoute -> staticRoutes.add(route)
         }
       }
-      startupRoute = routes.firstOrNull { !it.hidden }?.name ?: "default"
+      val startupRouteFromConfig = configLoader.getStartupRoute(inputStream)
+      startupRoute = routes.firstOrNull { it.name == startupRouteFromConfig }?.name ?: "default"
       isInitialized = true
     }
     navi?.let { this.navi = it }

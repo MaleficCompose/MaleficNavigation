@@ -53,4 +53,23 @@ class XmlConfigLoader : ConfigLoader {
     }
     return routes
   }
+
+  /**
+   * Retrieves the startup route from the given XML input stream.
+   *
+   * @param inputStream The input stream containing the XML configuration.
+   * @return The name of the startup route.
+   */
+  override fun getStartupRoute(inputStream: InputStream): String {
+    val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+    val document = documentBuilder.parse(inputStream)
+    document.documentElement.normalize()
+
+    val startupNode = document.getElementsByTagName("startup").item(0)
+    return if (startupNode != null && startupNode.nodeType == Node.ELEMENT_NODE) {
+      (startupNode as Element).textContent
+    } else {
+      "default"
+    }
+  }
 }
