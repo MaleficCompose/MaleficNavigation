@@ -2,16 +2,20 @@ $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:xyz.malefic.navigate.config////PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/index.html
 $dokka.location:xyz.malefic.navigate.config/ConfigLoader///PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-config-loader/index.html
+$dokka.location:xyz.malefic.navigate.config/ConfigLoader/getStartupRoute/#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-config-loader/get-startup-route.html
 $dokka.location:xyz.malefic.navigate.config/ConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-config-loader/load-routes.html
 $dokka.location:xyz.malefic.navigate.config/ConfigLoader/processRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Any]#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-config-loader/process-routes.html
 $dokka.location:xyz.malefic.navigate.config/JsonConfigLoader///PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-json-config-loader/index.html
 $dokka.location:xyz.malefic.navigate.config/JsonConfigLoader/JsonConfigLoader/#/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-json-config-loader/-json-config-loader.html
+$dokka.location:xyz.malefic.navigate.config/JsonConfigLoader/getStartupRoute/#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-json-config-loader/get-startup-route.html
 $dokka.location:xyz.malefic.navigate.config/JsonConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-json-config-loader/load-routes.html
 $dokka.location:xyz.malefic.navigate.config/XmlConfigLoader///PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-xml-config-loader/index.html
 $dokka.location:xyz.malefic.navigate.config/XmlConfigLoader/XmlConfigLoader/#/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-xml-config-loader/-xml-config-loader.html
+$dokka.location:xyz.malefic.navigate.config/XmlConfigLoader/getStartupRoute/#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-xml-config-loader/get-startup-route.html
 $dokka.location:xyz.malefic.navigate.config/XmlConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-xml-config-loader/load-routes.html
 $dokka.location:xyz.malefic.navigate.config/YamlConfigLoader///PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-yaml-config-loader/index.html
 $dokka.location:xyz.malefic.navigate.config/YamlConfigLoader/YamlConfigLoader/#/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-yaml-config-loader/-yaml-config-loader.html
+$dokka.location:xyz.malefic.navigate.config/YamlConfigLoader/getStartupRoute/#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-yaml-config-loader/get-startup-route.html
 $dokka.location:xyz.malefic.navigate.config/YamlConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-nav/xyz.malefic.navigate.config/-yaml-config-loader/load-routes.html
 $dokka.location:xyz.malefic.navigate////PointingToDeclaration/-malefic-nav/xyz.malefic.navigate/index.html
 $dokka.location:xyz.malefic.navigate/DynamicRoute///PointingToDeclaration/-malefic-nav/xyz.malefic.navigate/-dynamic-route/index.html
