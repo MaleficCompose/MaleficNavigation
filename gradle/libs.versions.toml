@@ -6,7 +6,7 @@ gson = "2.11.0"
 kermit = "2.0.5"
 central = "1.2.5"
 maleficextensions = "1.1.5"
-dokka = "1.9.20"
+dokka = "2.0.0"
 
 [libraries]
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
