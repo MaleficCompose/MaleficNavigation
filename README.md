@@ -17,7 +17,7 @@ To use MaleficNav in your project, add the following dependencies to your `build
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
-    implementation("xyz.malefic:maleficnav:1.1.2")
+    implementation("xyz.malefic.compose:nav:1.2.0")
 }
 ```
 
@@ -66,7 +66,7 @@ fun App2(navi: Navigator) {
 
 ### 2. Define Routes in a config format
 
-Currently, only YAML, JSON, and XML are supported. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
+Currently, only YAML, JSON, and XML as well as a custom format called MalefiConfig are supported. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
 
 ```yaml
 routes:
@@ -84,6 +84,15 @@ routes:
     params:
       - text?
 startup: home2
+```
+
+Here's the same meaning, but in a MalefiConfig (`routes.mcf`) format:
+
+```
+routes:
+    home2* -> App2
+    home -> App1? [id, name?]
+    hidden -> Text? [text?]
 ```
 
 ### 3. Create Navigation Menu
@@ -144,7 +153,7 @@ src/
 
 ## ComposeDesktopTemplate
 
-If you want to start with a completely set up project, you can find the above example [here](https://github.com/OmyDaGreat/ComposeDesktopTemplate).
+If you want to start with a completely set up project, you can find something similar to the above example [here](https://github.com/MaleficCompose/ComposeDesktopTemplate).
 
 ## Projects Using This Library
 

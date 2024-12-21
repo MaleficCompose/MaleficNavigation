@@ -1,6 +1,7 @@
 module.exports = {
   types: [
     {value: 'feat', name: 'feat:     A new feature'},
+    {value: 'version', name: 'version:  A new version in maven central'},
     {value: 'fix', name: 'fix:      A bug fix'},
     {value: 'docs', name: 'docs:     Documentation only changes'},
     {
@@ -40,7 +41,8 @@ module.exports = {
       {name: 'dokka'},
       {name: 'cz'},
       {name: 'readme'},
-    ]
+    ],
+    version: []
   },
   // override the messages, defaults are as follows
   messages: {

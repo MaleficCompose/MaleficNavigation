@@ -32,14 +32,11 @@ jobs:
 
       - name: Build and Generate Docs
         run: |
-          ./gradlew dokkaHtml
-
-      - name: Add CNAME File
-        run: |
-          echo "maleficnav.malefic.xyz" > build/dokka/CNAME
+          ./gradlew dokkaGenerate
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build/dokka
+          cname: nav.compose.malefic.xyz
