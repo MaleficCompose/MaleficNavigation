@@ -32,6 +32,7 @@ dependencies {
   implementation(libs.gson)
   implementation(libs.kermit)
   implementation(libs.malefic.extensions)
+  testImplementation(kotlin("test"))
 }
 
 spotless {
@@ -107,4 +108,8 @@ centralPortalPlus {
 
 tasks.dokkaHtml {
   outputDirectory.set(layout.buildDirectory.dir("dokka"))
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
