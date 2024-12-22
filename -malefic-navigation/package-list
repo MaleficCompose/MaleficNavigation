@@ -1,0 +1,47 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:xyz.malefic.compose.nav.config////PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/index.html
+$dokka.location:xyz.malefic.compose.nav.config/ConfigLoader///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-config-loader/index.html
+$dokka.location:xyz.malefic.compose.nav.config/ConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-config-loader/load-routes.html
+$dokka.location:xyz.malefic.compose.nav.config/ConfigLoader/processRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Any]#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-config-loader/process-routes.html
+$dokka.location:xyz.malefic.compose.nav.config/JsonConfigLoader///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-json-config-loader/index.html
+$dokka.location:xyz.malefic.compose.nav.config/JsonConfigLoader/JsonConfigLoader/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-json-config-loader/-json-config-loader.html
+$dokka.location:xyz.malefic.compose.nav.config/JsonConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-json-config-loader/load-routes.html
+$dokka.location:xyz.malefic.compose.nav.config/MalefiConfigLoader///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-malefi-config-loader/index.html
+$dokka.location:xyz.malefic.compose.nav.config/MalefiConfigLoader/MalefiConfigLoader/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-malefi-config-loader/-malefi-config-loader.html
+$dokka.location:xyz.malefic.compose.nav.config/MalefiConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-malefi-config-loader/load-routes.html
+$dokka.location:xyz.malefic.compose.nav.config/XmlConfigLoader///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-xml-config-loader/index.html
+$dokka.location:xyz.malefic.compose.nav.config/XmlConfigLoader/XmlConfigLoader/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-xml-config-loader/-xml-config-loader.html
+$dokka.location:xyz.malefic.compose.nav.config/XmlConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-xml-config-loader/load-routes.html
+$dokka.location:xyz.malefic.compose.nav.config/YamlConfigLoader///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-yaml-config-loader/index.html
+$dokka.location:xyz.malefic.compose.nav.config/YamlConfigLoader/YamlConfigLoader/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-yaml-config-loader/-yaml-config-loader.html
+$dokka.location:xyz.malefic.compose.nav.config/YamlConfigLoader/loadRoutes/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav.config/-yaml-config-loader/load-routes.html
+$dokka.location:xyz.malefic.compose.nav////PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/index.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/index.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/DynamicRoute/#kotlin.String#kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]#kotlin.Boolean#kotlin.collections.List[kotlin.String]/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/-dynamic-route.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/composable/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/composable.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/fullName/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/full-name.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/hidden/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/hidden.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/name/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/name.html
+$dokka.location:xyz.malefic.compose.nav/DynamicRoute/params/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-dynamic-route/params.html
+$dokka.location:xyz.malefic.compose.nav/Route///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route/index.html
+$dokka.location:xyz.malefic.compose.nav/Route/composable/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route/composable.html
+$dokka.location:xyz.malefic.compose.nav/Route/hidden/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route/hidden.html
+$dokka.location:xyz.malefic.compose.nav/Route/name/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route/name.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/index.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/RoutedNavHost/#kotlin.String/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/-routed-nav-host.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/RoutedSidebar/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/-routed-sidebar.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/allRoutes/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/all-routes.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/dynamicRoutes/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/dynamic-routes.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/getNonHiddenRoutes/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/get-non-hidden-routes.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/initialize/#kotlin.collections.Map[kotlin.String,kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]]#java.io.InputStream#xyz.malefic.compose.nav.config.ConfigLoader#moe.tlaster.precompose.navigation.Navigator?/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/initialize.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/navi/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/navi.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/startupRoute/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/startup-route.html
+$dokka.location:xyz.malefic.compose.nav/RouteManager/staticRoutes/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-route-manager/static-routes.html
+$dokka.location:xyz.malefic.compose.nav/StaticRoute///PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-static-route/index.html
+$dokka.location:xyz.malefic.compose.nav/StaticRoute/StaticRoute/#kotlin.String#kotlin.Function1[kotlin.collections.List[kotlin.String?],kotlin.Unit]#kotlin.Boolean/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-static-route/-static-route.html
+$dokka.location:xyz.malefic.compose.nav/StaticRoute/composable/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-static-route/composable.html
+$dokka.location:xyz.malefic.compose.nav/StaticRoute/hidden/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-static-route/hidden.html
+$dokka.location:xyz.malefic.compose.nav/StaticRoute/name/#/PointingToDeclaration/-malefic-navigation/xyz.malefic.compose.nav/-static-route/name.html
+xyz.malefic.compose.nav
+xyz.malefic.compose.nav.config
