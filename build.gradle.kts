@@ -2,10 +2,10 @@ import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
 // Basic Information
 val user = "MaleficCompose"
-val repo = "MaleficNav"
+val repo = "MaleficNavigation"
 val g = "xyz.malefic.compose"
 val artifact = "nav"
-val v = "1.2.1"
+val v = "1.2.2"
 val desc = "A Compose Desktop library for navigation meant to be used alongside PreCompose"
 
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
@@ -24,14 +24,14 @@ plugins {
 
 // Dependencies
 dependencies {
+    implementation(libs.malefic.ext.compose)
     implementation(compose.desktop.common)
     implementation(compose.animation)
     implementation(compose.foundation)
     implementation(libs.precompose)
     implementation(libs.snakeyaml)
-    implementation(libs.gson)
     implementation(libs.kermit)
-    implementation(libs.malefic.ext.compose)
+    implementation(libs.gson)
     testImplementation(kotlin("test"))
 }
 

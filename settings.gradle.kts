@@ -7,4 +7,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "MaleficNav"
+rootProject.name = "MaleficNavigation"
