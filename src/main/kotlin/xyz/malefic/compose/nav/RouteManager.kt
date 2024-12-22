@@ -16,8 +16,8 @@ import co.touchlab.kermit.Logger
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
-import xyz.malefic.compose.ext.precompose.gate
 import xyz.malefic.compose.nav.config.ConfigLoader
+import xyz.malefic.ext.precompose.gate
 import java.io.InputStream
 
 /** Manages the routes for the application. */

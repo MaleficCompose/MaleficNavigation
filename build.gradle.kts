@@ -5,7 +5,7 @@ val user = "MaleficCompose"
 val repo = "MaleficNav"
 val g = "xyz.malefic.compose"
 val artifact = "nav"
-val v = "1.2.0"
+val v = "1.2.1"
 val desc = "A Compose Desktop library for navigation meant to be used alongside PreCompose"
 
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
@@ -31,7 +31,7 @@ dependencies {
     implementation(libs.snakeyaml)
     implementation(libs.gson)
     implementation(libs.kermit)
-    implementation(libs.malefic.extensions)
+    implementation(libs.malefic.ext.compose)
     testImplementation(kotlin("test"))
 }
 
