@@ -1,18 +1,29 @@
-# MaleficNav Library
+# MaleficNavigation: Flexible Navigation for Compose Desktop
 
-MaleficNav is a Kotlin-based navigation library designed for Compose Desktop applications. It provides a simple and flexible way to manage navigation routes, including dynamic and static routes, with support for YAML-based configuration. It is based off and intended for use alongside [PreCompose](https://github.com/Tlaster/PreCompose).
+## Overview
 
-## Features
+MaleficNavigation is a powerful, lightweight navigation library designed specifically for Compose Desktop applications. Built to seamlessly integrate with [PreCompose](https://github.com/Tlaster/PreCompose), it provides developers with a flexible and intuitive routing solution.
 
-- **Dynamic and Static Routes**: Define routes with or without parameters.
-- **Multi-file Configuration**: Load routes from a YAML, XML, JSON or custom config file.
-- **Composable Navigation**: Use composable functions for route content.
-- **Navigator Integration**: Seamless integration with PreCompose navigation.
-- **Basic Setup**: Comes with a basic implementation that's akin to plug and play.
+## 🌟 Key Features
 
-## Installation
+- **Versatile Route Configuration**
+  - Support for dynamic and static routes
+  - Multiple configuration formats (YAML, JSON, XML, custom)
+  - Compile-time route definitions via Kotlin DSL
 
-To use MaleficNav in your project, add the following dependencies to your `build.gradle.kts` file:
+- **Composable-First Design**
+  - Use composable functions directly as route content
+  - Flexible parameter handling for routes
+  - Easy integration with PreCompose navigation
+
+- **Configuration Flexibility**
+  - Multi-file configuration support
+  - Custom config loader implementation
+  - Hidden route capabilities
+
+## 📦 Installation
+
+Add these dependencies to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
@@ -21,133 +32,99 @@ dependencies {
 }
 ```
 
-## Usage
+## 🚀 Quick Start
 
-### 1. Create Composable Functions
-
-Below are a couple I made using the route setup that follows.
+### 1. Define Composable Routes
 
 ```kotlin
 @Composable
 fun App1(id: String, name: String?) {
-  var text by remember { mutableStateOf("Hello, World!") }
-
-  Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    Column(
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center,
-    ) {
-      Button(onClick = { text = "Hello, Desktop!" }) { Text(text) }
-      Spacer(modifier = Modifier.height(16.dp))
-      Text("ID: $id")
-      name?.let { Text("Name: $name") } ?: run { Text("Unnamed") }
-    }
-  }
+    // Your route content
 }
 
 @Composable
 fun App2(navi: Navigator) {
-  var text by remember { mutableStateOf("Hello, World 2!") }
-
-  Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    Column(
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center,
-    ) {
-      Button(onClick = { text = "Hello, Desktop 2!" }) { Text(text) }
-      Spacer(modifier = Modifier.height(16.dp))
-      Button(onClick = { navi.navigate("home/123456") }) { Text("Go to App1") }
-      Spacer(modifier = Modifier.height(16.dp))
-      Button(onClick = { navi.navigate("hidden/boo!") }) { Text("Go to Hidden Page") }
-    }
-  }
+    // Another route content
 }
 ```
 
-### 2. Define Routes in a config format
+### 2. Configure Routes
 
-Currently, a Kotlin DSL, YAML, JSON, and XML as well as a custom format called MalefiConfig are supported. However, you can implement ConfigLoader to support your own format if preferred. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the default sidebar. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
-
-```yaml
-routes:
-  - name: home2
-    composable: App2
-  - name: home
-    composable: App1
-    hidden: true
-    params:
-      - id
-      - name?
-  - name: hidden
-    composable: Text
-    hidden: true
-    params:
-      - text?
-startup: home2
-```
-
-Here's the same meaning, but in a MalefiConfig (`routes.mcf`) format:
-
-```
-routes:
-    home2* -> App2
-    home -> App1? [id, name?]
-    hidden -> Text? [text?]
-```
-
-For the Kotlin DSL format, you can define the routes when initializing the RouteManager in step 5 without the need for a composable map like in step 4:
-
+#### Traditional Approach (with Composable Map)
 ```kotlin
+// Requires a separate composable map
+val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
+    "App1" to { params -> App1(id = params[0]!!, name = params[1]) },
+    "App2" to { _ -> App2(RouteManager.navi) }
+)
+
+// Initialization with composable map
+RouteManager.initialize(
+    composableMap, 
+    resourceStream("/routes.yaml"), 
+    YamlConfigLoader()
+)
+```
+
+#### 🆕 Kotlin DSL Approach (Recommended)
+```kotlin
+// No separate composable map needed!
 RouteManager.initialize {
-    route("home", hidden = true) { params -> App1(id = params[0]!!, name = params[1, null]) }
-    startupRoute("home2", "id", "name?") { _ -> App2(RouteManager.navi) }
-    hiddenRoute("hidden", "text?") { params -> Text(text = params[0, "Nope."]) }
+    // Direct route definition with inline composables
+    route("home", hidden = true) { params -> 
+        App1(id = params[0]!!, name = params[1]) 
+    }
+    
+    // Start-up route with direct composable
+    startupRoute("home2") { _ -> 
+        App2(RouteManager.navi) 
+    }
+    
+    // Hidden route with optional parameters
+    hiddenRoute("hidden", "text?") { params -> 
+        Text(text = params[0] ?: "Default Text") 
+    }
 }
 ```
+
+**Key Advantages of the Kotlin DSL:**
+- No need to create a separate composable map
+- Routes defined directly during initialization
+- Type-safe parameter handling
+- Inline composable definitions
+- More readable and concise configuration
+- Compile-time checking of routes
 
 ### 3. Create Navigation Menu
-
-Define the navigation menu using `RoutedSidebar` and `RoutedNavHost` or create your own implementations of them. Everything I used to make them is available through RouteManager and you can look at those two composables in the same location for inspiration.
 
 ```kotlin
 @Composable
 fun NavigationMenu() {
-    Row(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
+    Row {
         RouteManager.RoutedSidebar()
-        Divider(color = Color.Black, modifier = Modifier.fillMaxHeight().width(1.dp))
         RouteManager.RoutedNavHost()
     }
 }
 ```
 
-### 4. Define Composable Map
-
-Create a map of composable functions that follows whatever you set up. Within the [MaleficExtensions](https://github.com/MaleficCompose/MaleficExtensions) library, there is an extension function of List that allows for specifying a default parameter. Below is a pretty good example of a composable mapping with a variety of different usages.
-
-```kotlin
-val composableMap: Map<String, @Composable (List<String?>) -> Unit> = mapOf(
-    "App1" to { params -> App1(id = params[0]!!, name = params[1, null]) },
-    "App2" to { _ -> App2(RouteManager.navi) },
-    "Text" to { params -> Text(text = params[0, "Nope."]) }
-)
-```
-
-### 5. Initialize RouteManager
-
-Initialize the `RouteManager` in your `main` function. The `ConfigLoader` should be of the same type as your routes file. You can create your own by implementing the interface. The `NavWindow` is a completely set up Window for PreCompose on Desktop coming from [MaleficComponents](https://github.com/MaleficCompose/MaleficComponents), but you can use a regular Window or other composable as long as PreCompose is still set up properly. Make sure to reference the `routes.yaml` (or whatever other config format you use) file in one way or another, with this being a beginner's example:
+### 4. Initialize in Main Function
 
 ```kotlin
 fun main() = application {
-  NavWindow(onCloseRequest = ::exitApplication) {
-    MaterialTheme {
-      RouteManager.initialize(composableMap, this::class.java.getResourceAsStream("/routes.yaml")!!, YamlConfigLoader())
-      NavigationMenu()
+    NavWindow(onCloseRequest = ::exitApplication) {
+        MaterialTheme {
+            // Using Kotlin DSL - no composable map required
+            RouteManager.initialize {
+                route("home") { _ -> MainScreen() }
+                startupRoute("dashboard") { _ -> DashboardScreen() }
+            }
+            NavigationMenu()
+        }
     }
-  }
 }
 ```
 
-### Finished Example Project Structure
+## 📂 Project Structure Example
 
 ```
 src/
@@ -161,24 +138,41 @@ src/
 │   │   └── routes.yaml
 ```
 
-## ComposeDesktopTemplate
+## 🛠 Advanced Configuration
 
-If you want to start with a completely set up project, you can find something similar to the above example [here](https://github.com/MaleficCompose/ComposeDesktopTemplate).
+### Custom Config Loader
 
-## Projects Using This Library
+Implement the `ConfigLoader` interface to support your own configuration format:
 
-### [baka-notes](https://github.com/OmyDaGreat/baka-notes) - A note-taking app by me, for me
+```kotlin
+interface ConfigLoader {
+    fun loadRoutes(
+        composableMap: Map<String, @Composable (List<String?>) -> Unit>,
+        inputStream: InputStream
+    ): Pair<String, List<Route>>
+}
+```
 
-If you want to add your project here, you can submit a pull request or reach out to me.
+## 🤝 Contributing
 
-## Contributing
+Contributions are welcome! Please:
+- Open an issue to discuss proposed changes
+- Submit pull requests with clear descriptions
+- Follow existing code style and conventions
 
-Contributions are welcome! Please open an issue or submit a pull request.
+## 📄 License
 
-## Contact
+MIT License
 
-For any questions or feedback, please feel free to contact me.
+## 🌐 Related Projects
 
-## License
+- [PreCompose](https://github.com/Tlaster/PreCompose)
+- [ComposeDesktopTemplate](https://github.com/MaleficCompose/ComposeDesktopTemplate)
 
-This project is licensed under the terms of the MIT license.
+### Projects Using MaleficNavigation
+
+*Want to add your project? Submit a pull request or reach out!*
+
+## 📞 Contact
+
+For questions, feedback, or support, please open an issue on GitHub.
