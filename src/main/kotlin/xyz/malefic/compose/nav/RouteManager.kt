@@ -16,6 +16,7 @@ import co.touchlab.kermit.Logger
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
+import xyz.malefic.compose.nav.config.ConfigDSL
 import xyz.malefic.compose.nav.config.ConfigLoader
 import xyz.malefic.ext.precompose.gate
 import java.io.InputStream
@@ -47,18 +48,44 @@ object RouteManager {
     ) {
         if (!isInitialized) {
             val config = configLoader.loadRoutes(composableMap, inputStream)
-            val routes = config.second
-            routes.forEach { route ->
-                when (route) {
-                    is DynamicRoute -> dynamicRoutes.add(route)
-                    is StaticRoute -> staticRoutes.add(route)
-                }
-            }
-            val startupRouteFromConfig = config.first
-            startupRoute = routes.firstOrNull { it.name == startupRouteFromConfig }?.name ?: "default"
-            isInitialized = true
+            config.applyConfig()
         }
         navi?.let { this.navi = it }
+    }
+
+    /**
+     * Initializes the RouteManager with the provided navigator and route configuration builder.
+     *
+     * @param navi An optional navigator to use.
+     * @param builder A lambda function to build the route configuration.
+     */
+    fun initialize(
+        navi: Navigator? = null,
+        builder: ConfigDSL.() -> Unit,
+    ) {
+        if (!isInitialized) {
+            val config = ConfigDSL().apply(builder).build()
+            config.applyConfig()
+        }
+        navi?.let { this.navi = it }
+    }
+
+    /**
+     * Applies the given configuration to the RouteManager.
+     *
+     * @receiver A pair containing the startup route name and a list of routes.
+     */
+    private fun Pair<String, List<Route>>.applyConfig() {
+        val routes = this.second
+        routes.forEach { route ->
+            when (route) {
+                is DynamicRoute -> dynamicRoutes.add(route)
+                is StaticRoute -> staticRoutes.add(route)
+            }
+        }
+        val startupRouteFromConfig = this.first
+        startupRoute = routes.firstOrNull { it.name == startupRouteFromConfig }?.name ?: "default"
+        isInitialized = true
     }
 
     /**

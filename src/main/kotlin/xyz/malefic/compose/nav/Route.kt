@@ -9,8 +9,6 @@ interface Route {
 
     /**
      * A composable function that defines the UI for the route.
-     *
-     * @param params A list of optional parameters for the route.
      */
     val composable: @Composable (List<String?>) -> Unit
 

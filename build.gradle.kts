@@ -1,12 +1,12 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
 // Basic Information
-val user = "MaleficCompose"
-val repo = "MaleficNavigation"
-val g = "xyz.malefic.compose"
-val artifact = "nav"
-val v = "1.2.2"
-val desc = "A Compose Desktop library for navigation meant to be used alongside PreCompose"
+val user: String by project
+val repo: String by project
+val g: String by project
+val artifact: String by project
+val v: String by project
+val desc: String by project
 
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
@@ -111,14 +111,13 @@ signing {
 // Central Portal Configuration
 centralPortalPlus {
     url = localMavenRepo
-    username = System.getenv("centralPortalUsername") ?: ""
-    password = System.getenv("centralPortalPassword") ?: ""
+    tokenXml = uri(layout.projectDirectory.file("user_token.xml"))
     publishingType = PublishingType.AUTOMATIC
 }
 
 // Tasks
 tasks.apply {
-    create("formatAndLintKotlin") {
+    register("formatAndLintKotlin") {
         group = "formatting"
         description = "Fix Kotlin code style deviations with kotlinter"
         dependsOn(formatKotlin)

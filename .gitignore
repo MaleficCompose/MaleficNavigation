@@ -44,3 +44,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 .lastDeploymentsId
+
+### Secrets ###
+user_token.xml

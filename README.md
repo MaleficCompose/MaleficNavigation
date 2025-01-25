@@ -17,7 +17,7 @@ To use MaleficNav in your project, add the following dependencies to your `build
 ```kotlin
 dependencies {
     implementation("moe.tlaster:precompose:1.6.2")
-    implementation("xyz.malefic.compose:nav:1.2.0")
+    implementation("xyz.malefic.compose:nav:1.3.0")
 }
 ```
 
@@ -66,7 +66,7 @@ fun App2(navi: Navigator) {
 
 ### 2. Define Routes in a config format
 
-Currently, only YAML, JSON, and XML as well as a custom format called MalefiConfig are supported. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the sidebar. If you use your own sidebar implementation, which I would highly recommend, then that does not really matter. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
+Currently, a Kotlin DSL, YAML, JSON, and XML as well as a custom format called MalefiConfig are supported. However, you can implement ConfigLoader to support your own format if preferred. Provided is an example of a `routes.yaml` file to define the routes through the application. Each route should have a name and a composable. The hidden aspect decides if it is shown in the default sidebar. The parameters should be defined after that. The names of the parameters should be consistent with whatever they are named in the composable. A `?` after a parameter name indicates that it is optional.
 
 ```yaml
 routes:
@@ -93,6 +93,16 @@ routes:
     home2* -> App2
     home -> App1? [id, name?]
     hidden -> Text? [text?]
+```
+
+For the Kotlin DSL format, you can define the routes when initializing the RouteManager in step 5 without the need for a composable map like in step 4:
+
+```kotlin
+RouteManager.initialize {
+    route("home", hidden = true) { params -> App1(id = params[0]!!, name = params[1, null]) }
+    startupRoute("home2", "id", "name?") { _ -> App2(RouteManager.navi) }
+    hiddenRoute("hidden", "text?") { params -> Text(text = params[0, "Nope."]) }
+}
 ```
 
 ### 3. Create Navigation Menu

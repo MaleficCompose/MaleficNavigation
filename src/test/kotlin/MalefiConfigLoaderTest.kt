@@ -1,3 +1,4 @@
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import xyz.malefic.compose.nav.DynamicRoute
 import xyz.malefic.compose.nav.StaticRoute
@@ -9,10 +10,10 @@ import kotlin.test.assertEquals
 class MalefiConfigLoaderTest {
     private val composableMap =
         mapOf<String, @Composable (List<String?>) -> Unit>(
-            "Home" to @Composable { _ -> androidx.compose.material.Text("Home") },
-            "App1" to @Composable { _ -> androidx.compose.material.Text("App1") },
-            "RepoList" to @Composable { _ -> androidx.compose.material.Text("RepoList") },
-            "Text" to @Composable { _ -> androidx.compose.material.Text("Text") },
+            "Home" to @Composable { _ -> Text("Home") },
+            "App1" to @Composable { _ -> Text("App1") },
+            "RepoList" to @Composable { _ -> Text("RepoList") },
+            "Text" to @Composable { _ -> Text("Text") },
         )
 
     @Test
