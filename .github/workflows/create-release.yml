@@ -22,7 +22,6 @@ jobs:
           COMMIT_MSG=$(git log -1 --pretty=%B)
           
           # Check if commit message matches version pattern
-          # Updated pattern to support multiple digits in each version component
           if [[ $COMMIT_MSG =~ ^version\(([0-9]+\.[0-9]+\.[0-9]+)\):.*$ ]]; then
             VERSION="${BASH_REMATCH[1]}"
             echo "Version $VERSION detected in commit message"
@@ -34,15 +33,29 @@ jobs:
             if [ "$LATEST_TAG" = "none" ]; then
               # If no previous tag exists, use all commits
               CHANGELOG=$(git log --pretty=format:"* %s (%h)" --no-merges)
+              # Get all unique contributors
+              CONTRIBUTORS=$(git log --format="%aN <%aE>" --no-merges | sort -u)
             else
               # Get commits since last tag
               CHANGELOG=$(git log --pretty=format:"* %s (%h)" --no-merges ${LATEST_TAG}..HEAD)
+              # Get contributors since last tag
+              CONTRIBUTORS=$(git log ${LATEST_TAG}..HEAD --format="%aN <%aE>" --no-merges | sort -u)
             fi
           
-            # Create a temporary file for the changelog
-            echo "# Changelog for version $VERSION" > changelog.md
-            echo "" >> changelog.md
-            echo "$CHANGELOG" >> changelog.md
+            # Create a temporary file for the release notes
+            {
+              echo "# Changelog for version $VERSION"
+              echo ""
+              echo "$CHANGELOG"
+              echo ""
+              echo "## Contributors"
+              echo ""
+              echo "Thank you to all contributors for this release:"
+              echo ""
+              while IFS= read -r contributor; do
+                echo "* $contributor"
+              done <<< "$CONTRIBUTORS"
+            } > changelog.md
           
             # Create GitHub release
             gh release create "v$VERSION" \
