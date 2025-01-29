@@ -27,7 +27,7 @@ class ConfigDSL {
     }
 
     /**
-     * Adds a dynamic route with optional hidden flag.
+     * Adds a dynamic route, configured with parameters.
      *
      * @param name The name of the route.
      * @param hidden Whether the route is hidden.
