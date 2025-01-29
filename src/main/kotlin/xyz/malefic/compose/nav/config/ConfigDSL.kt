@@ -20,9 +20,10 @@ class ConfigDSL {
      */
     fun route(
         name: String,
+        hidden: Boolean = false,
         composable: @Composable () -> Unit,
     ) {
-        routes.add(StaticRoute(name, { _ -> composable() }, false))
+        routes.add(StaticRoute(name, { _ -> composable() }, hidden))
     }
 
     /**
@@ -52,23 +53,8 @@ class ConfigDSL {
         name: String,
         composable: @Composable () -> Unit,
     ) {
-        route(name, composable)
+        route(name, composable = composable)
         startupRoute = name
-    }
-
-    /**
-     * Adds a hidden route.
-     *
-     * @param name The name of the route.
-     * @param params The parameters for the route.
-     * @param composable The composable function to be displayed for this route.
-     */
-    fun hiddenRoute(
-        name: String,
-        vararg params: String,
-        composable: @Composable (List<String?>) -> Unit,
-    ) {
-        route(name, true, *params, composable = composable)
     }
 
     /**
