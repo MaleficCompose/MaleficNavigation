@@ -22,7 +22,7 @@ class ConfigDSL {
         name: String,
         composable: @Composable () -> Unit,
     ) {
-        staticRoute(name, composable = composable)
+        staticRoute(name, false, composable)
     }
 
     /**
@@ -52,7 +52,7 @@ class ConfigDSL {
         vararg params: String,
         composable: @Composable (List<String?>) -> Unit,
     ) {
-        dynamicRoute(name, composable = composable, params = params)
+        dynamicRoute(name, false, params = params, composable)
     }
 
     /**
@@ -84,7 +84,7 @@ class ConfigDSL {
         name: String,
         composable: @Composable () -> Unit,
     ) {
-        startupRoute(name, composable = composable)
+        startupRoute(name, false, composable)
         startupRoute = name
     }
 
