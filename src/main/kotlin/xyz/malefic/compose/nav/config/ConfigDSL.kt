@@ -18,11 +18,11 @@ class ConfigDSL {
      * @param name The name of the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun staticRoute(
+    fun static(
         name: String,
         composable: @Composable () -> Unit,
     ) {
-        staticRoute(name, false, composable)
+        static(name, false, composable)
     }
 
     /**
@@ -32,7 +32,7 @@ class ConfigDSL {
      * @param hidden Whether the route is hidden, defaulting to false.
      * @param composable The composable function to be displayed for this route.
      */
-    fun staticRoute(
+    fun static(
         name: String,
         hidden: Boolean = false,
         composable: @Composable () -> Unit,
@@ -47,12 +47,12 @@ class ConfigDSL {
      * @param params The parameters for the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun dynamicRoute(
+    fun dynamic(
         name: String,
         vararg params: String,
         composable: @Composable (List<String?>) -> Unit,
     ) {
-        dynamicRoute(name, false, params = params, composable)
+        dynamic(name, false, params = params, composable)
     }
 
     /**
@@ -63,7 +63,7 @@ class ConfigDSL {
      * @param params The parameters for the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun dynamicRoute(
+    fun dynamic(
         name: String,
         hidden: Boolean = false,
         vararg params: String,
@@ -80,11 +80,11 @@ class ConfigDSL {
      * @param name The name of the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun startupRoute(
+    fun startup(
         name: String,
         composable: @Composable () -> Unit,
     ) {
-        startupRoute(name, false, composable)
+        startup(name, false, composable)
         startupRoute = name
     }
 
@@ -97,12 +97,12 @@ class ConfigDSL {
      * @param hidden Whether the route is hidden.
      * @param composable The composable function to be displayed for this route.
      */
-    fun startupRoute(
+    fun startup(
         name: String,
         hidden: Boolean = false,
         composable: @Composable () -> Unit,
     ) {
-        staticRoute(name, hidden, composable = composable)
+        static(name, hidden, composable = composable)
         startupRoute = name
     }
 
