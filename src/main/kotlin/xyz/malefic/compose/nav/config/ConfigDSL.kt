@@ -46,14 +46,18 @@ class ConfigDSL {
     /**
      * Adds a startup route (marked with *).
      *
+     * The startup route is the route that is displayed when the application is first launched and thus is not allowed to have any parameters.
+     *
      * @param name The name of the route.
+     * @param hidden Whether the route is hidden.
      * @param composable The composable function to be displayed for this route.
      */
     fun startupRoute(
         name: String,
+        hidden: Boolean = false,
         composable: @Composable () -> Unit,
     ) {
-        route(name, composable = composable)
+        route(name, hidden, composable = composable)
         startupRoute = name
     }
 
