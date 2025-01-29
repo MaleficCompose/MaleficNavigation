@@ -13,12 +13,26 @@ class ConfigDSL {
     private var startupRoute: String? = null
 
     /**
-     * Adds a static route without parameters.
+     * Adds a static route without parameters or being hidden.
      *
      * @param name The name of the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun route(
+    fun staticRoute(
+        name: String,
+        composable: @Composable () -> Unit,
+    ) {
+        staticRoute(name, composable = composable)
+    }
+
+    /**
+     * Adds a static route without parameters.
+     *
+     * @param name The name of the route.
+     * @param hidden Whether the route is hidden, defaulting to false.
+     * @param composable The composable function to be displayed for this route.
+     */
+    fun staticRoute(
         name: String,
         hidden: Boolean = false,
         composable: @Composable () -> Unit,
@@ -27,14 +41,29 @@ class ConfigDSL {
     }
 
     /**
-     * Adds a dynamic route, configured with parameters.
+     * Adds a dynamic route, configured with parameters and without being hidden.
      *
      * @param name The name of the route.
-     * @param hidden Whether the route is hidden.
      * @param params The parameters for the route.
      * @param composable The composable function to be displayed for this route.
      */
-    fun route(
+    fun dynamicRoute(
+        name: String,
+        vararg params: String,
+        composable: @Composable (List<String?>) -> Unit,
+    ) {
+        dynamicRoute(name, composable = composable, params = params)
+    }
+
+    /**
+     * Adds a dynamic route, configured with parameters.
+     *
+     * @param name The name of the route.
+     * @param hidden Whether the route is hidden, defaulting to false.
+     * @param params The parameters for the route.
+     * @param composable The composable function to be displayed for this route.
+     */
+    fun dynamicRoute(
         name: String,
         hidden: Boolean = false,
         vararg params: String,
@@ -44,7 +73,23 @@ class ConfigDSL {
     }
 
     /**
-     * Adds a startup route (marked with *).
+     * Adds a startup route, without being hidden.
+     *
+     * The startup route is the route that is displayed when the application is first launched and thus is not allowed to have any parameters.
+     *
+     * @param name The name of the route.
+     * @param composable The composable function to be displayed for this route.
+     */
+    fun startupRoute(
+        name: String,
+        composable: @Composable () -> Unit,
+    ) {
+        startupRoute(name, composable = composable)
+        startupRoute = name
+    }
+
+    /**
+     * Adds a startup route.
      *
      * The startup route is the route that is displayed when the application is first launched and thus is not allowed to have any parameters.
      *
@@ -57,7 +102,7 @@ class ConfigDSL {
         hidden: Boolean = false,
         composable: @Composable () -> Unit,
     ) {
-        route(name, hidden, composable = composable)
+        staticRoute(name, hidden, composable = composable)
         startupRoute = name
     }
 
