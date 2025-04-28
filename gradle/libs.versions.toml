@@ -8,7 +8,7 @@ maleficextensions = "1.4.1"
 dokka = "2.0.0"
 compose = "1.8.0-alpha03"
 kotlin = "2.1.20"
-kotlinter = "5.0.1"
+kotlinter = "5.0.2"
 
 [libraries]
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
