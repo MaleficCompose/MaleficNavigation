@@ -1,6 +1,5 @@
 import cn.lalaki.pub.BaseCentralPortalPlusExtension.PublishingType
 
-// Basic Information
 val user: String by project
 val repo: String by project
 val g: String by project
@@ -10,7 +9,6 @@ val desc: String by project
 
 val localMavenRepo = uri(layout.buildDirectory.dir("repo").get())
 
-// Plugins
 plugins {
     alias(libs.plugins.compose.kotlin)
     alias(libs.plugins.kotlin.jvm)
@@ -22,7 +20,6 @@ plugins {
     signing
 }
 
-// Dependencies
 dependencies {
     implementation(libs.malefic.ext.compose)
     implementation(compose.desktop.common)
@@ -35,18 +32,15 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-// Project Information
 group = g
 version = v
 
-// Repositories
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
 }
 
-// Java Configuration
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -54,14 +48,12 @@ java {
     withSourcesJar()
 }
 
-// Kotlin Configuration
 kotlin {
     jvmToolchain {
         this.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
-// Publishing
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -102,26 +94,23 @@ publishing {
     }
 }
 
-// Signing
 signing {
     useGpgCmd()
     sign(publishing.publications)
 }
 
-// Central Portal Configuration
 centralPortalPlus {
     url = localMavenRepo
     tokenXml = uri(layout.projectDirectory.file("user_token.xml"))
     publishingType = PublishingType.AUTOMATIC
 }
 
-// Tasks
 tasks.apply {
     register("formatAndLintKotlin") {
         group = "formatting"
         description = "Fix Kotlin code style deviations with kotlinter"
-        dependsOn(formatKotlin)
-        dependsOn(lintKotlin)
+        dependsOn("formatKotlin")
+        dependsOn("lintKotlin")
     }
     build {
         dependsOn(named("formatAndLintKotlin"))
@@ -138,7 +127,6 @@ tasks.apply {
     }
 }
 
-// Dokka
 dokka {
     dokkaPublications.html {
         outputDirectory.set(layout.buildDirectory.dir("dokka"))
