@@ -27,9 +27,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build with Gradle
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      - name: Run matrix target
+      - name: Run Build With Gradle
         run: ./gradlew build
