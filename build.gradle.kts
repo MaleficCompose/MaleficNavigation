@@ -25,10 +25,10 @@ dependencies {
     implementation(compose.desktop.common)
     implementation(compose.animation)
     implementation(compose.foundation)
-    implementation(libs.precompose)
     implementation(libs.snakeyaml)
     implementation(libs.kermit)
     implementation(libs.gson)
+    api(libs.precompose)
     testImplementation(kotlin("test"))
 }
 
