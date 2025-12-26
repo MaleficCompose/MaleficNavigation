@@ -16,10 +16,7 @@ import co.touchlab.kermit.Logger
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.rememberNavigator
-import xyz.malefic.compose.nav.config.ConfigDSL
-import xyz.malefic.compose.nav.config.ConfigLoader
 import xyz.malefic.ext.precompose.gate
-import java.io.InputStream
 
 /** Manages the routes for the application. */
 object RouteManager {
@@ -31,27 +28,6 @@ object RouteManager {
 
     lateinit var navi: Navigator
     lateinit var startupRoute: String
-
-    /**
-     * Initializes the RouteManager with the provided routes and navigator.
-     *
-     * @param composableMap A map of composable functions.
-     * @param inputStream The input stream to load routes from.
-     * @param configLoader The configuration loader to use.
-     * @param navi An optional navigator to use.
-     */
-    fun initialize(
-        composableMap: Map<String, @Composable (List<String?>) -> Unit>,
-        inputStream: InputStream,
-        configLoader: ConfigLoader,
-        navi: Navigator? = null,
-    ) {
-        if (!isInitialized) {
-            val config = configLoader.loadRoutes(composableMap, inputStream)
-            config.applyConfig()
-        }
-        navi?.let { this.navi = it }
-    }
 
     /**
      * Initializes the RouteManager with the provided navigator and route configuration builder.
@@ -118,42 +94,51 @@ object RouteManager {
      * @param startupRoute The initial route to display.
      */
     @Composable
-    fun RoutedNavHost(startupRoute: String = this.startupRoute) {
+    fun RoutedNavHost(
+        startupRoute: String = this.startupRoute,
+        modifier: Modifier = Modifier,
+    ) {
         composableEnsureInitialized()
-        NavHost(navi, initialRoute = startupRoute) {
-            dynamicRoutes.forEach { route ->
-                Logger.d("Adding dynamic route ${route.name}")
-                scene(route.fullName) { params -> route.composable(params.pathMap.values.toList()) }
-            }
+        NavHost(navi, initialRoute = startupRoute, modifier = modifier) {
             staticRoutes.forEach { route ->
                 Logger.d("Adding static route ${route.name}")
                 scene(route.name) { route.composable(emptyList()) }
             }
+            dynamicRoutes.forEach { route ->
+                Logger.d("Adding dynamic route ${route.name}")
+                scene(route.fullName) { params -> route.composable(params.pathMap.values.toList()) }
+            }
         }
     }
 
-    /** Displays the sidebar with buttons for each non-hidden route. */
+    /** Displays the sidebar with buttons for each eligible route. */
     @Composable
-    fun RoutedSidebar() {
+    fun RoutedSidebar(modifier: Modifier = Modifier) {
         composableEnsureInitialized()
         Column(
-            modifier = Modifier.width(200.dp).fillMaxHeight(),
+            modifier = Modifier.width(200.dp).fillMaxHeight().then(modifier),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            getNonHiddenRoutes().forEach { route ->
+            getEligibleRoutes().forEach { route ->
                 Button(onClick = { navi gate route.name }) { Text(route.name.capitalize(Locale.current)) }
             }
         }
     }
 
     /**
-     * Returns a list of all non-hidden routes.
+     * Returns a list of all eligible routes (routes with no parameters or only optional parameters).
      *
-     * @return A list of non-hidden routes.
+     * @return A list of eligible routes.
      */
-    fun getNonHiddenRoutes(): List<Route> {
+    fun getEligibleRoutes(): List<Route> {
         ensureInitialized()
-        return allRoutes.filter { !it.hidden }
+        return allRoutes.filter { route ->
+            when (route) {
+                is StaticRoute -> true
+                is DynamicRoute -> route.params.all { it.endsWith("?") }
+                else -> false
+            }
+        }
     }
 }

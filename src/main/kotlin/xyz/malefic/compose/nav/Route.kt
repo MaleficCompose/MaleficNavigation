@@ -11,9 +11,6 @@ interface Route {
      * A composable function that defines the UI for the route.
      */
     val composable: @Composable (List<String?>) -> Unit
-
-    /** A boolean indicating if the route is hidden. */
-    val hidden: Boolean
 }
 
 /**
@@ -21,13 +18,11 @@ interface Route {
  *
  * @property name The name of the route.
  * @property composable A composable function that defines the UI for the route.
- * @property hidden A boolean indicating if the route is hidden.
  * @property params A list of parameters for the route.
  */
 data class DynamicRoute(
     override val name: String,
     override val composable: @Composable (List<String?>) -> Unit,
-    override val hidden: Boolean,
     val params: List<String> = emptyList(),
 ) : Route {
     /** The full name of the route including parameters. */
@@ -44,10 +39,8 @@ data class DynamicRoute(
  *
  * @property name The name of the route.
  * @property composable A composable function that defines the UI for the route.
- * @property hidden A boolean indicating if the route is hidden.
  */
 data class StaticRoute(
     override val name: String,
     override val composable: @Composable (List<String?>) -> Unit,
-    override val hidden: Boolean,
 ) : Route

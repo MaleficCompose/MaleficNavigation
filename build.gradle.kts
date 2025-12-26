@@ -29,7 +29,6 @@ dependencies {
     implementation(libs.kermit)
     implementation(libs.gson)
     api(libs.precompose)
-    testImplementation(kotlin("test"))
 }
 
 group = g
