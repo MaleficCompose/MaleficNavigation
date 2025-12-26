@@ -95,9 +95,7 @@ object RouteManager {
      */
     private fun ensureInitialized() {
         check(isInitialized) {
-            throw IllegalStateException(
-                "RouteManager is not initialized. Call RouteManager.initialize() first.",
-            )
+            error("RouteManager is not initialized. Call RouteManager.initialize() first.")
         }
     }
 
@@ -108,11 +106,7 @@ object RouteManager {
      */
     @Composable
     private fun composableEnsureInitialized() {
-        check(isInitialized) {
-            throw IllegalStateException(
-                "RouteManager is not initialized. Call RouteManager.initialize() first.",
-            )
-        }
+        ensureInitialized()
         if (!::navi.isInitialized) {
             navi = rememberNavigator()
         }
