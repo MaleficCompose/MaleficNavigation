@@ -1,0 +1,404 @@
+= MaleficNavigation: Compose Desktop Navigation
+:toc: left
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+
+A powerful, lightweight navigation library for Compose Desktop applications with seamless https://github.com/Tlaster/PreCompose[PreCompose] integration.
+
+== Overview
+
+MaleficNavigation provides a modern, DSL-based routing solution for Compose Desktop applications. Built on top of PreCompose, it offers a clean and intuitive API for defining navigation routes directly in Kotlin code.
+
+== Key Features
+
+=== Modern Kotlin DSL
+* Define routes inline without separate composable maps
+* Type-safe parameter handling
+* Compile-time route validation
+* Clean, readable syntax
+
+=== Flexible Route Types
+* **Static routes** - Simple routes without parameters
+* **Dynamic routes** - Routes with required or optional parameters
+* **Startup routes** - Define the initial route on application launch
+
+=== Composable-First Design
+* Use composable functions directly as route content
+* Seamless integration with PreCompose Navigator
+* Automatic sidebar generation from eligible routes
+
+== Installation
+
+Add the dependency to your `build.gradle.kts`:
+
+[source,kotlin]
+----
+dependencies {
+    implementation("xyz.malefic.compose:nav:1.3.3")
+    implementation("moe.tlaster:precompose:1.6.2") // recommended for extra functionality
+}
+----
+
+== Quick Start
+
+=== Basic Setup
+
+[source,kotlin]
+----
+fun main() = application {
+    NavWindow(onCloseRequest = ::exitApplication) {
+        MaterialTheme {
+            // Initialize with DSL
+            RouteManager.initialize {
+                startup("home") { HomeScreen() }
+                static("about") { AboutScreen() }
+            }
+            
+            Row {
+                RouteManager.RoutedSidebar()
+                RouteManager.RoutedNavHost()
+            }
+        }
+    }
+}
+----
+
+=== Defining Routes
+
+==== Static Routes
+
+Static routes have no parameters and are the simplest route type:
+
+[source,kotlin]
+----
+RouteManager.initialize {
+    static("home") {
+        Text("Welcome Home!")
+    }
+    
+    static("settings") {
+        SettingsScreen()
+    }
+}
+----
+
+==== Dynamic Routes
+
+Dynamic routes accept parameters that can be passed during navigation:
+
+[source,kotlin]
+----
+RouteManager.initialize {
+    dynamic("profile", "userId") { params ->
+        val userId = params[0] ?: ""
+        ProfileScreen(userId = userId)
+    }
+    
+    // Multiple parameters
+    dynamic("post", "id", "author?") { params ->
+        val id = params[0]!!
+        val author = params[1] // nullable (optional)
+        PostScreen(id = id, author = author)
+    }
+}
+----
+
+TIP: Parameters ending with `?` are optional and can be null.
+
+==== Startup Routes
+
+Define which route should be displayed when the application launches:
+
+[source,kotlin]
+----
+RouteManager.initialize {
+    startup("dashboard") {
+        DashboardScreen()
+    }
+    
+    static("profile") {
+        ProfileScreen()
+    }
+}
+----
+
+NOTE: If no startup route is defined, the first registered route is used by default.
+
+=== Navigation
+
+==== Using the Navigator
+
+Access the navigator to programmatically navigate between routes:
+
+[source,kotlin]
+----
+@Composable
+fun HomeScreen() {
+    val navi = RouteManager.navi
+    
+    Column {
+        Button(onClick = { navi.navigate("settings") }) {
+            Text("Go to Settings")
+        }
+        
+        // Navigate with parameters
+        Button(onClick = { navi.navigate("profile/123") }) {
+            Text("View Profile")
+        }
+    }
+}
+----
+
+==== Automatic Sidebar
+
+The `RoutedSidebar()` composable automatically generates navigation buttons for eligible routes:
+
+[source,kotlin]
+----
+@Composable
+fun AppLayout() {
+    Row {
+        // Automatically shows buttons for routes without required parameters
+        RouteManager.RoutedSidebar()
+        
+        // Main content area
+        RouteManager.RoutedNavHost()
+    }
+}
+----
+
+IMPORTANT: Only routes with no parameters or only optional parameters appear in the sidebar.
+
+== Advanced Usage
+
+=== Custom Navigator
+
+Provide your own Navigator instance:
+
+[source,kotlin]
+----
+@Composable
+fun App() {
+    val customNavigator = rememberNavigator()
+    
+    RouteManager.initialize(navi = customNavigator) {
+        startup("home") { HomeScreen() }
+    }
+}
+----
+
+=== Custom Modifiers
+
+Apply custom styling to navigation components:
+
+[source,kotlin]
+----
+@Composable
+fun StyledNavigation() {
+    Row {
+        RouteManager.RoutedSidebar(
+            modifier = Modifier
+                .background(Color.LightGray)
+                .padding(16.dp)
+        )
+        
+        RouteManager.RoutedNavHost(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        )
+    }
+}
+----
+
+=== Programmatic Route Access
+
+Get information about registered routes:
+
+[source,kotlin]
+----
+// Get all routes that can be navigated to without parameters
+val eligibleRoutes = RouteManager.getEligibleRoutes()
+
+// Access all routes
+val allRoutes = RouteManager.allRoutes
+
+// Access specific route types
+val staticRoutes = RouteManager.staticRoutes
+val dynamicRoutes = RouteManager.dynamicRoutes
+----
+
+== Migration Guide
+
+=== From Legacy ConfigLoader System
+
+The old system required separate composable maps and configuration files:
+
+.Old Approach (Deprecated)
+[source,kotlin]
+----
+// Required separate composable map
+val composableMap = mapOf(
+    "App1" to { params -> App1(id = params[0]!!, name = params[1]) }
+)
+
+RouteManager.initialize(
+    composableMap, 
+    resourceStream("/routes.yaml"), 
+    YamlConfigLoader()
+)
+----
+
+.New Approach (Recommended)
+[source,kotlin]
+----
+// No separate map needed!
+RouteManager.initialize {
+    dynamic("App1", "id", "name?") { params ->
+        App1(id = params[0]!!, name = params[1])
+    }
+}
+----
+
+=== Benefits of the New System
+
+* ✅ No external configuration files needed
+* ✅ Compile-time type safety
+* ✅ Better IDE support and autocomplete
+* ✅ Easier to maintain and refactor
+* ✅ Reduced boilerplate code
+
+== API Reference
+
+=== RouteManager
+
+The central object for managing navigation:
+
+[cols="1,3"]
+|===
+|Method |Description
+
+|`initialize(navi, builder)`
+|Initialize the route manager with a DSL configuration
+
+|`RoutedNavHost(startupRoute, modifier)`
+|Composable that displays the navigation host
+
+|`RoutedSidebar(modifier)`
+|Composable that displays automatic navigation sidebar
+
+|`getEligibleRoutes()`
+|Returns routes that can be navigated to without parameters
+|===
+
+=== ConfigDSL
+
+DSL builder for route configuration:
+
+[cols="1,3"]
+|===
+|Function |Description
+
+|`static(name, composable)`
+|Register a static route without parameters
+
+|`dynamic(name, *params, composable)`
+|Register a dynamic route with parameters
+
+|`startup(name, composable)`
+|Register the startup route (must be static)
+|===
+
+=== Route Types
+
+[cols="1,3"]
+|===
+|Type |Description
+
+|`StaticRoute`
+|Route without parameters
+
+|`DynamicRoute`
+|Route with required or optional parameters
+|===
+
+== Examples
+
+=== Complete Application
+
+[source,kotlin]
+----
+@Composable
+fun HomeScreen() {
+    Column {
+        Text("Home Screen", style = MaterialTheme.typography.h4)
+        Button(onClick = { RouteManager.navi.navigate("profile/user123") }) {
+            Text("View My Profile")
+        }
+    }
+}
+
+@Composable
+fun ProfileScreen(userId: String) {
+    Column {
+        Text("Profile: $userId", style = MaterialTheme.typography.h4)
+        Button(onClick = { RouteManager.navi.navigate("home") }) {
+            Text("Back to Home")
+        }
+    }
+}
+
+fun main() = application {
+    NavWindow(
+        title = "My App",
+        onCloseRequest = ::exitApplication
+    ) {
+        MaterialTheme {
+            RouteManager.initialize {
+                startup("home") { HomeScreen() }
+                dynamic("profile", "userId") { params ->
+                    ProfileScreen(userId = params[0]!!)
+                }
+            }
+            
+            Row(Modifier.fillMaxSize()) {
+                RouteManager.RoutedSidebar(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .fillMaxHeight()
+                )
+                Box(Modifier.weight(1f)) {
+                    RouteManager.RoutedNavHost()
+                }
+            }
+        }
+    }
+}
+----
+
+== Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with clear commit messages
+4. Submit a pull request
+
+TIP: Open an issue first to discuss major changes.
+
+== License
+
+This project is licensed under the MIT License.
+
+== Related Projects
+
+* https://github.com/Tlaster/PreCompose[PreCompose] - Multi-platform navigation and state management
+* https://github.com/OmyDaGreat/ComposeDesktopTemplate[ComposeDesktopTemplate] - Template for Compose Desktop projects
+
+'''
+
+_thanks for reading!_
+
+_- malefic_
